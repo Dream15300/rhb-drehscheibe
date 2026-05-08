@@ -4,6 +4,7 @@ import { Html, Line } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { type MutableRefObject, useRef } from "react";
 import { Group, MathUtils } from "three";
+import type { TargetRotation } from "./Scene";
 
 export type Locale = "de" | "fr";
 
@@ -288,7 +289,7 @@ const trackAngles = [-8, 8, 185];
 type Props = {
   locale: Locale;
   discoveredIds: string[];
-  targetRotation: MutableRefObject<number>;
+  targetRotation: MutableRefObject<TargetRotation>;
   onSelectHotspot: (hotspot: HotspotInfo) => void;
 };
 
@@ -491,8 +492,14 @@ export default function Turntable({
 
     groupRef.current.rotation.y = MathUtils.lerp(
       groupRef.current.rotation.y,
-      targetRotation.current,
+      targetRotation.current.y,
       0.18,
+    );
+
+    groupRef.current.rotation.x = MathUtils.lerp(
+      groupRef.current.rotation.x,
+      targetRotation.current.x,
+      0.16,
     );
   });
 
@@ -710,18 +717,12 @@ export default function Turntable({
 
       {hotspots.map((hotspot) => {
         const isDiscovered = discoveredIds.includes(hotspot.id);
-        const lineColor = isDiscovered ? "#15803d" : "#b00000";
-        const buttonLabel = isDiscovered
-          ? locale === "de"
-            ? `${hotspot.label[locale]} ✓`
-            : `${hotspot.label[locale]} ✓`
-          : hotspot.label[locale];
 
         return (
           <group key={hotspot.id}>
             <Line
               points={[hotspot.anchorPosition, hotspot.labelPosition]}
-              color={lineColor}
+              color={isDiscovered ? "#15803d" : "#b00000"}
               lineWidth={isDiscovered ? 2.25 : 1.5}
               transparent
               opacity={isDiscovered ? 1 : 0.85}

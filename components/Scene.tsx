@@ -12,20 +12,30 @@ type Props = {
   onSelectHotspot: (hotspot: HotspotInfo) => void;
 };
 
+export type TargetRotation = {
+  x: number;
+  y: number;
+};
+
 export default function Scene({
   locale,
   discoveredIds,
   onSelectHotspot,
 }: Props) {
-  const targetRotation = useRef(0);
+  const targetRotation = useRef<TargetRotation>({ x: 0, y: 0 });
   const dragStartX = useRef(0);
-  const rotationStart = useRef(0);
+  const dragStartY = useRef(0);
+  const rotationStart = useRef<TargetRotation>({ x: 0, y: 0 });
   const isDragging = useRef(false);
 
   function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
     isDragging.current = true;
     dragStartX.current = event.clientX;
-    rotationStart.current = targetRotation.current;
+    dragStartY.current = event.clientY;
+    rotationStart.current = {
+      x: targetRotation.current.x,
+      y: targetRotation.current.y,
+    };
     event.currentTarget.setPointerCapture(event.pointerId);
   }
 
@@ -33,7 +43,14 @@ export default function Scene({
     if (!isDragging.current) return;
 
     const deltaX = event.clientX - dragStartX.current;
-    targetRotation.current = rotationStart.current + deltaX * 0.01;
+    const deltaY = event.clientY - dragStartY.current;
+
+    targetRotation.current.y = rotationStart.current.y + deltaX * 0.01;
+
+    targetRotation.current.x = Math.min(
+      0.45,
+      Math.max(-0.7, rotationStart.current.x + deltaY * 0.006),
+    );
   }
 
   function handlePointerUp(event: PointerEvent<HTMLDivElement>) {
