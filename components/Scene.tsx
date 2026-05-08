@@ -4,13 +4,19 @@ import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { useRef } from "react";
 import type { PointerEvent } from "react";
-import Turntable, { type HotspotInfo } from "./Turntable";
+import Turntable, { type HotspotInfo, type Locale } from "./Turntable";
 
 type Props = {
+  locale: Locale;
+  discoveredIds: string[];
   onSelectHotspot: (hotspot: HotspotInfo) => void;
 };
 
-export default function Scene({ onSelectHotspot }: Props) {
+export default function Scene({
+  locale,
+  discoveredIds,
+  onSelectHotspot,
+}: Props) {
   const targetRotation = useRef(0);
   const dragStartX = useRef(0);
   const rotationStart = useRef(0);
@@ -61,6 +67,8 @@ export default function Scene({ onSelectHotspot }: Props) {
         <directionalLight position={[-4, 4, -3]} intensity={1.1} />
 
         <Turntable
+          locale={locale}
+          discoveredIds={discoveredIds}
           targetRotation={targetRotation}
           onSelectHotspot={onSelectHotspot}
         />
