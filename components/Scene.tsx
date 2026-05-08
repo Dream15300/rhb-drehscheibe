@@ -9,6 +9,7 @@ import Turntable, { type HotspotInfo, type Locale } from "./Turntable";
 type Props = {
   locale: Locale;
   discoveredIds: string[];
+  showHotspots: boolean;
   onSelectHotspot: (hotspot: HotspotInfo) => void;
 };
 
@@ -20,6 +21,7 @@ export type TargetRotation = {
 export default function Scene({
   locale,
   discoveredIds,
+  showHotspots,
   onSelectHotspot,
 }: Props) {
   const targetRotation = useRef<TargetRotation>({ x: 0, y: 0 });
@@ -36,6 +38,7 @@ export default function Scene({
       x: targetRotation.current.x,
       y: targetRotation.current.y,
     };
+
     event.currentTarget.setPointerCapture(event.pointerId);
   }
 
@@ -48,8 +51,8 @@ export default function Scene({
     targetRotation.current.y = rotationStart.current.y + deltaX * 0.01;
 
     targetRotation.current.x = Math.min(
-      0.45,
-      Math.max(-0.7, rotationStart.current.x + deltaY * 0.006),
+      0.18,
+      Math.max(-0.32, rotationStart.current.x + deltaY * 0.0045),
     );
   }
 
@@ -86,6 +89,7 @@ export default function Scene({
         <Turntable
           locale={locale}
           discoveredIds={discoveredIds}
+          showHotspots={showHotspots}
           targetRotation={targetRotation}
           onSelectHotspot={onSelectHotspot}
         />

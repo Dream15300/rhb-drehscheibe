@@ -13,7 +13,7 @@ const uiText = {
     intro:
       "Erkunde eine historische handbetriebene Drehscheibe. Drehe das Modell mit dem Finger und öffne die markierten Bauteile.",
     start: "Objekt erkunden",
-    hint: "Mit einem Finger horizontal drehen. Beschriftungen antippen.",
+    hint: "Mit einem Finger horizontal oder vertikal drehen. Beschriftungen antippen.",
     component: "Bauteil",
     back: "Zurück",
     short: "Kurz erklärt",
@@ -25,14 +25,17 @@ const uiText = {
     quizButton: "Quiz öffnen",
     correct: "Richtig",
     wrong: "Nochmals prüfen",
+    hotspotsOn: "Beschriftungen AN",
+    hotspotsOff: "Beschriftungen AUS",
   },
+
   fr: {
     appLabel: "Application découverte DFB",
     title: "Plaque tournante manuelle de la Furka",
     intro:
       "Explore une plaque tournante historique. Fais tourner le modèle avec le doigt et ouvre les éléments marqués.",
     start: "Explorer l'objet",
-    hint: "Faire glisser horizontalement avec un doigt. Toucher les libellés.",
+    hint: "Faire glisser avec un doigt horizontalement ou verticalement. Toucher les libellés.",
     component: "Élément",
     back: "Retour",
     short: "Explication courte",
@@ -44,15 +47,23 @@ const uiText = {
     quizButton: "Ouvrir le quiz",
     correct: "Correct",
     wrong: "Vérifier encore",
+    hotspotsOn: "Légendes ON",
+    hotspotsOff: "Légendes OFF",
   },
 } satisfies Record<Locale, Record<string, string>>;
 
 export default function Home() {
   const [locale, setLocale] = useState<Locale>("de");
+
   const [screen, setScreen] = useState<Screen>("intro");
+
   const [activeHotspot, setActiveHotspot] = useState<HotspotInfo | null>(null);
+
   const [discoveredIds, setDiscoveredIds] = useState<string[]>([]);
+
   const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+
+  const [showHotspots, setShowHotspots] = useState(true);
 
   const text = uiText[locale];
 
@@ -62,6 +73,7 @@ export default function Home() {
 
   const quizResult = useMemo(() => {
     if (!activeHotspot || quizAnswer === null) return null;
+
     return quizAnswer === activeHotspot.quiz.correctOptionId;
   }, [activeHotspot, quizAnswer]);
 
@@ -104,10 +116,7 @@ export default function Home() {
               {text.intro}
             </p>
 
-            <div
-              className="mt-6 inline-flex rounded-full border border-black/10 bg-white p-1 shadow-sm"
-              aria-label="Sprache wählen"
-            >
+            <div className="mt-6 inline-flex rounded-full border border-black/10 bg-white p-1 shadow-sm">
               <button
                 type="button"
                 onClick={() => setLocale("de")}
@@ -146,24 +155,51 @@ export default function Home() {
 
       {screen === "explore" && (
         <>
-          <header className="pointer-events-none absolute left-0 top-0 z-20 w-full px-5 py-5">
-            <p className="text-xs font-bold uppercase tracking-[0.32em] text-red-700">
+          <header className="pointer-events-none absolute left-0 top-0 z-20 w-full px-5 py-4">
+            <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-red-700">
               {text.appLabel}
             </p>
 
-            <h1 className="mt-2 max-w-xs text-2xl font-black leading-tight">
+            <h1 className="mt-1 max-w-[180px] text-[1.7rem] font-black leading-[0.98]">
               {text.title}
             </h1>
           </header>
 
+          <div className="absolute bottom-20 right-5 z-30">
+            <button
+              type="button"
+              onClick={() => setShowHotspots((current) => !current)}
+              className={`
+                min-h-10
+                rounded-full
+                border
+                px-3
+                text-[10px]
+                font-black
+                uppercase
+                tracking-[0.12em]
+                shadow-sm
+                backdrop-blur
+                ${
+                  showHotspots
+                    ? "border-red-700 bg-white/90 text-red-700"
+                    : "border-black/10 bg-black/70 text-white"
+                }
+              `}
+            >
+              {showHotspots ? text.hotspotsOn : text.hotspotsOff}
+            </button>
+          </div>
+
           <Scene
             locale={locale}
             discoveredIds={discoveredIds}
+            showHotspots={showHotspots}
             onSelectHotspot={openHotspot}
           />
 
           <div className="pointer-events-none absolute bottom-4 left-0 z-20 w-full px-5">
-            <div className="rounded-2xl border border-black/10 bg-white/95 px-4 py-3 text-sm font-bold text-neutral-800 shadow-lg">
+            <div className="rounded-2xl border border-black/10 bg-white/80 px-3 py-1.5 text-[11px] font-bold leading-5 text-neutral-800 shadow-sm">
               {text.hint}
             </div>
           </div>
@@ -187,33 +223,36 @@ export default function Home() {
               {text.component}
             </p>
 
-            <h2 className="mt-4 text-4xl font-black leading-tight">
+            <h2 className="mt-4 max-w-full break-words text-[2rem] font-black leading-[0.95]">
               {activeHotspot.title[locale]}
             </h2>
 
             <div className="mt-6 space-y-5">
               <section>
-                <h3 className="text-sm font-black uppercase tracking-wider text-neutral-950">
+                <h3 className="text-sm font-black uppercase tracking-wider">
                   {text.short}
                 </h3>
+
                 <p className="mt-2 max-w-md text-base leading-7 text-neutral-700">
                   {activeHotspot.shortText[locale]}
                 </p>
               </section>
 
               <section>
-                <h3 className="text-sm font-black uppercase tracking-wider text-neutral-950">
+                <h3 className="text-sm font-black uppercase tracking-wider">
                   {text.technical}
                 </h3>
+
                 <p className="mt-2 max-w-md text-base leading-7 text-neutral-700">
                   {activeHotspot.technicalText[locale]}
                 </p>
               </section>
 
               <section>
-                <h3 className="text-sm font-black uppercase tracking-wider text-neutral-950">
+                <h3 className="text-sm font-black uppercase tracking-wider">
                   {text.why}
                 </h3>
+
                 <p className="mt-2 max-w-md text-base leading-7 text-neutral-700">
                   {activeHotspot.whyText[locale]}
                 </p>

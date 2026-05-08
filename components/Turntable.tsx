@@ -19,6 +19,7 @@ export type HotspotInfo = {
   whyText: LocalizedText;
   anchorPosition: [number, number, number];
   labelPosition: [number, number, number];
+  mobileLabelPosition: [number, number, number];
   quiz: {
     question: LocalizedText;
     correctOptionId: string;
@@ -35,19 +36,22 @@ const hotspots: HotspotInfo[] = [
     label: { de: "Brücke", fr: "Pont" },
     title: { de: "Gleisbrücke", fr: "Pont de voie" },
     shortText: {
-      de: "Die Gleisbrücke trägt das Schienengleis über der Grube.",
-      fr: "Le pont de voie porte les rails au-dessus de la fosse.",
+      de: "Die Gleisbrücke trägt das meterspurige Gleis der Drehscheibe über der Grube.",
+      fr: "Le pont porte la voie métrique au-dessus de la fosse.",
     },
+
     technicalText: {
-      de: "Die roten Längsträger übernehmen die Hauptlast. Querträger und Diagonalstreben versteifen die Brücke gegen Verwindung.",
-      fr: "Les longerons rouges reprennent la charge principale. Les traverses et diagonales rigidifient la structure.",
+      de: "Die Brücke besteht aus genieteten bzw. verschraubten Stahlträgern mit Querverbänden. Sie nimmt das Gewicht von Lokomotiven und Wagen auf und leitet die Kräfte in Lager und Laufring ab. Die schmale Bauweise ist typisch für kleinere Schmalspur-Drehscheiben im Depotbetrieb.",
+      fr: "Le pont se compose de poutres métalliques rivetées ou boulonnées avec entretoises. Il reprend les charges des locomotives et des voitures et transmet les forces au pivot et à l’anneau de roulement.",
     },
+
     whyText: {
-      de: "Ohne steife Brücke könnten Schienen und Anschlussgleise nicht präzise ausgerichtet werden.",
-      fr: "Sans pont rigide, les rails ne pourraient pas être alignés précisément.",
+      de: "Nur eine steife und exakt geführte Brücke ermöglicht das sichere Ausrichten der Gleise im Depot Realp.",
+      fr: "Seul un pont rigide et guidé avec précision permet un alignement sûr des voies du dépôt de Realp.",
     },
     anchorPosition: [-1.55, 0.58, -0.32],
     labelPosition: [-2.28, 1.08, -0.95],
+    mobileLabelPosition: [-1.95, 1.22, -1.15],
     quiz: {
       question: {
         de: "Welche Aufgabe hat die Gleisbrücke?",
@@ -77,19 +81,22 @@ const hotspots: HotspotInfo[] = [
     label: { de: "Fachwerk", fr: "Treillis" },
     title: { de: "Stahlfachwerk", fr: "Treillis métallique" },
     shortText: {
-      de: "Das Fachwerk macht die Drehscheibe leicht und stabil.",
-      fr: "Le treillis rend la plaque tournante légère et stable.",
+      de: "Das Stahlfachwerk macht die Drehscheibe leicht und gleichzeitig verwindungssteif.",
+      fr: "Le treillis métallique rend la plaque légère et rigide.",
     },
+
     technicalText: {
-      de: "Radiale und diagonale Streben bilden Dreiecke. Diese Geometrie erhöht die Steifigkeit bei geringem Materialeinsatz.",
-      fr: "Les barres radiales et diagonales forment des triangles. Cette géométrie augmente la rigidité avec peu de matière.",
+      de: "Die radialen und diagonalen Streben bilden ein Fachwerk aus Dreiecken. Diese Bauweise reduziert das Gewicht und erleichtert den Handbetrieb der Drehscheibe. Solche Konstruktionen waren bei meterspurigen Bergbahnen üblich.",
+      fr: "Les barres radiales et diagonales forment une structure triangulée. Cette construction réduit le poids et facilite la rotation manuelle.",
     },
+
     whyText: {
-      de: "Eine leichte Konstruktion lässt sich von Hand einfacher drehen.",
-      fr: "Une construction légère se tourne plus facilement à la main.",
+      de: "Je geringer die bewegte Masse ist, desto einfacher lässt sich die Drehscheibe von Hand bewegen.",
+      fr: "Plus la masse mobile est faible, plus la plaque tournante peut être tournée facilement à la main.",
     },
     anchorPosition: [-2.0, 0.24, 1.05],
     labelPosition: [-3.0, 0.74, 1.56],
+    mobileLabelPosition: [-2.35, 0.98, 1.38],
     quiz: {
       question: {
         de: "Warum ist ein Fachwerk sinnvoll?",
@@ -119,19 +126,22 @@ const hotspots: HotspotInfo[] = [
     label: { de: "Gleis", fr: "Voie" },
     title: { de: "Brückengleis", fr: "Voie du pont" },
     shortText: {
-      de: "Das Brückengleis verbindet sich durch Drehen mit einem Anschlussgleis.",
-      fr: "La voie du pont s’aligne avec une voie de raccordement par rotation.",
+      de: "Das Brückengleis verbindet die Drehscheibe mit den Anschlussgleisen des Depots.",
+      fr: "La voie du pont relie la plaque aux voies du dépôt.",
     },
+
     technicalText: {
-      de: "Die beiden Schienen liegen parallel auf Schwellen. Die Drehscheibe muss so positioniert werden, dass die Spurweite und Richtung exakt passen.",
-      fr: "Les deux rails reposent sur des traverses. La plaque doit être positionnée pour que l’écartement et la direction correspondent.",
+      de: "Die Schienen der Drehscheibe müssen exakt mit den Anschlussgleisen fluchten. Bereits kleine Abweichungen bei Höhe, Richtung oder Spurweite können den sicheren Fahrzeugübergang verhindern.",
+      fr: "Les rails doivent être alignés précisément avec les voies d’accès. De faibles écarts peuvent empêcher un passage sûr.",
     },
+
     whyText: {
-      de: "Schon kleine Abweichungen können das sichere Befahren verhindern.",
-      fr: "De petites différences peuvent empêcher un passage sûr.",
+      de: "Die präzise Gleisausrichtung ist entscheidend, damit Lokomotiven und Wagen sicher verschoben werden können.",
+      fr: "L’alignement précis des rails est essentiel pour déplacer les véhicules en sécurité.",
     },
     anchorPosition: [0.95, 0.64, 0.14],
     labelPosition: [1.6, 1.14, -0.68],
+    mobileLabelPosition: [1.45, 1.16, -0.82],
     quiz: {
       question: {
         de: "Was muss beim Ausrichten stimmen?",
@@ -161,19 +171,22 @@ const hotspots: HotspotInfo[] = [
     label: { de: "Lager", fr: "Pivot" },
     title: { de: "Zentrales Drehlager", fr: "Pivot central" },
     shortText: {
-      de: "Das zentrale Lager bildet die Drehachse.",
+      de: "Das zentrale Lager bildet die Drehachse der Drehscheibe.",
       fr: "Le pivot central forme l’axe de rotation.",
     },
+
     technicalText: {
-      de: "Das Lager nimmt einen grossen Teil der vertikalen Last auf und ermöglicht eine kontrollierte Rotation der gesamten Konstruktion.",
-      fr: "Le pivot reprend une grande partie de la charge verticale et permet une rotation contrôlée.",
+      de: "Im Zentrum der Grube befindet sich das Drehlager der Brücke. Zusammen mit Laufring und Laufrollen führt es die Konstruktion beim Drehen und nimmt einen Teil der auftretenden Kräfte auf.",
+      fr: "Au centre de la fosse se trouve le pivot de la structure. Avec l’anneau et les galets, il guide la rotation et reprend une partie des forces.",
     },
+
     whyText: {
-      de: "Ohne zentrales Lager wäre die Drehscheibe nicht präzise führbar.",
-      fr: "Sans pivot central, la plaque ne pourrait pas être guidée précisément.",
+      de: "Ohne präzise Lagerung könnte die Brücke nicht exakt auf die Gleise des Depots Realp ausgerichtet werden.",
+      fr: "Sans guidage précis, le pont ne pourrait pas être aligné correctement sur les voies du dépôt de Realp.",
     },
     anchorPosition: [0, 0.5, 0],
     labelPosition: [0.62, 1.08, 0.74],
+    mobileLabelPosition: [0.2, 1.02, 1.08],
     quiz: {
       question: {
         de: "Welche Funktion hat das zentrale Lager?",
@@ -203,19 +216,22 @@ const hotspots: HotspotInfo[] = [
     label: { de: "Antrieb", fr: "Commande" },
     title: { de: "Handantrieb", fr: "Commande manuelle" },
     shortText: {
-      de: "Die Drehscheibe wird mit Handrad und Hebel bewegt.",
-      fr: "La plaque est déplacée avec une roue et un levier.",
+      de: "Die Drehscheibe wird von Hand bewegt und ausgerichtet.",
+      fr: "La plaque tournante est déplacée manuellement.",
     },
+
     technicalText: {
-      de: "Die asymmetrischen Handantriebe zeigen, dass historische Anlagen oft zweckmässig angepasst wurden. Kraft wird manuell eingeleitet und über Hebelwirkung übertragen.",
-      fr: "Les commandes asymétriques montrent que les installations historiques étaient adaptées de façon pragmatique. La force est transmise manuellement par levier.",
+      de: "Kleinere Drehscheiben der Furka-Oberalp-Bahn und der heutigen DFB wurden von Hand bedient. Über Hebel und Handantrieb wird die Brücke langsam gedreht, bis das gewünschte Anschlussgleis erreicht ist.",
+      fr: "Les petites plaques tournantes du FO et du DFB étaient commandées manuellement. Des leviers permettent de tourner lentement le pont jusqu’à la voie voulue.",
     },
+
     whyText: {
-      de: "Der Handbetrieb machte die Anlage unabhängig von Strom oder Motoren.",
-      fr: "La commande manuelle rendait l’installation indépendante de l’électricité ou des moteurs.",
+      de: "Der Handbetrieb ist robust, wartungsarm und unabhängig von elektrischer Energie.",
+      fr: "La commande manuelle est robuste, simple et indépendante de l’électricité.",
     },
     anchorPosition: [2.86, 0.82, -0.42],
     labelPosition: [3.36, 1.22, -1.12],
+    mobileLabelPosition: [2.45, 1.18, -1.18],
     quiz: {
       question: {
         de: "Warum ist der Handantrieb historisch passend?",
@@ -245,19 +261,22 @@ const hotspots: HotspotInfo[] = [
     label: { de: "Laufring", fr: "Anneau" },
     title: { de: "Umlaufender Laufring", fr: "Anneau de roulement" },
     shortText: {
-      de: "Der Laufring führt die Drehscheibe am Rand.",
-      fr: "L’anneau guide la plaque sur son bord.",
+      de: "Der Laufring stabilisiert die Drehscheibe am Rand der Grube.",
+      fr: "L’anneau de roulement stabilise la plaque au bord de la fosse.",
     },
+
     technicalText: {
-      de: "Der Stahlring unterstützt die Bewegung am Grubenrand und verteilt Kräfte, die nicht vollständig über das zentrale Lager abgetragen werden.",
-      fr: "L’anneau métallique soutient le mouvement au bord de la fosse et répartit les forces non reprises par le pivot.",
+      de: "Die Brücke läuft mit Laufrollen auf dem ringförmigen Schienenkranz der Grube. Dadurch werden Kräfte verteilt und die Drehbewegung stabil geführt.",
+      fr: "Le pont repose sur des galets roulant sur un anneau circulaire. Cela répartit les forces et stabilise la rotation.",
     },
+
     whyText: {
-      de: "Er erhöht die Stabilität und erleichtert eine gleichmässige Drehbewegung.",
-      fr: "Il augmente la stabilité et facilite une rotation régulière.",
+      de: "Der Laufring verhindert Kippbewegungen und sorgt für ruhigen Lauf beim Drehen und Befahren.",
+      fr: "L’anneau réduit les mouvements de basculement et assure une rotation régulière.",
     },
     anchorPosition: [0.15, 0.06, 3.08],
     labelPosition: [0.92, 0.72, 2.72],
+    mobileLabelPosition: [0.9, 0.9, 2.48],
     quiz: {
       question: {
         de: "Wozu dient der Laufring?",
@@ -282,6 +301,124 @@ const hotspots: HotspotInfo[] = [
       ],
     },
   },
+  {
+    id: "locking",
+    label: { de: "Verriegelung", fr: "Verrou" },
+
+    title: {
+      de: "Mechanische Verriegelung",
+      fr: "Verrouillage mécanique",
+    },
+
+    shortText: {
+      de: "Die Verriegelung fixiert die Drehscheibe exakt auf einem Anschlussgleis.",
+      fr: "Le verrouillage fixe précisément la plaque sur une voie.",
+    },
+
+    technicalText: {
+      de: "Nach dem Ausrichten wird die Brücke mechanisch verriegelt. Dadurch kann sie sich beim Befahren nicht unbeabsichtigt verdrehen. Historische Drehscheiben der Furka-Oberalp-Bahn und der heutigen DFB verwendeten einfache, robuste Sperr- und Riegelsysteme.",
+      fr: "Après l’alignement, le pont est verrouillé mécaniquement. Cela empêche toute rotation involontaire pendant le passage des véhicules.",
+    },
+
+    whyText: {
+      de: "Ohne Verriegelung könnten sich die Schienen beim Befahren verschieben. Das würde den sicheren Fahrzeugübergang gefährden.",
+      fr: "Sans verrouillage, les rails pourraient se déplacer pendant le passage des véhicules.",
+    },
+
+    anchorPosition: [2.32, 0.42, 0.24],
+
+    labelPosition: [3.1, 0.95, 0.88],
+
+    mobileLabelPosition: [2.02, 0.96, 0.92],
+
+    quiz: {
+      question: {
+        de: "Warum ist die Verriegelung wichtig?",
+        fr: "Pourquoi le verrouillage est-il important?",
+      },
+
+      correctOptionId: "safety",
+
+      options: [
+        {
+          id: "safety",
+
+          label: {
+            de: "Sie verhindert ein Verdrehen beim Befahren.",
+            fr: "Il empêche une rotation pendant le passage.",
+          },
+        },
+
+        {
+          id: "decoration",
+
+          label: {
+            de: "Sie dient nur zur Markierung.",
+            fr: "Il sert uniquement de marquage.",
+          },
+        },
+      ],
+    },
+  },
+  {
+    id: "pit",
+    label: { de: "Grube", fr: "Fosse" },
+
+    title: {
+      de: "Drehscheibengrube",
+      fr: "Fosse de la plaque tournante",
+    },
+
+    shortText: {
+      de: "Die Grube nimmt die Konstruktion der Drehscheibe auf.",
+      fr: "La fosse accueille la structure de la plaque tournante.",
+    },
+
+    technicalText: {
+      de: "Die Drehscheibe liegt in einer kreisförmigen Grube aus Beton und Mauerwerk. In ihr befinden sich Lager, Laufrollen und der umlaufende Laufring. Solche Grubenbauweisen waren bei Schweizer Schmalspurbahnen weit verbreitet.",
+      fr: "La plaque se trouve dans une fosse circulaire en béton et maçonnerie. Elle contient le pivot, les galets et l’anneau de roulement.",
+    },
+
+    whyText: {
+      de: "Die Grube ermöglicht eine niedrige Bauhöhe und führt die Drehscheibe stabil im Boden.",
+      fr: "La fosse permet une faible hauteur de construction et guide la plaque de manière stable.",
+    },
+
+    anchorPosition: [-0.62, -0.11, 2.25],
+
+    labelPosition: [-1.55, 0.42, 3.08],
+
+    mobileLabelPosition: [-1.02, 0.55, 2.38],
+
+    quiz: {
+      question: {
+        de: "Welche Aufgabe hat die Grube?",
+        fr: "Quelle est la fonction de la fosse?",
+      },
+
+      correctOptionId: "support",
+
+      options: [
+        {
+          id: "support",
+
+          label: {
+            de: "Sie nimmt Lager und Laufring auf.",
+            fr: "Elle contient le pivot et l’anneau.",
+          },
+        },
+
+        {
+          id: "water",
+
+          label: {
+            de: "Sie dient als Wasserreservoir.",
+            fr: "Elle sert de réservoir d’eau.",
+          },
+        },
+      ],
+    },
+  },
 ];
 
 const trackAngles = [-8, 8, 185];
@@ -289,6 +426,7 @@ const trackAngles = [-8, 8, 185];
 type Props = {
   locale: Locale;
   discoveredIds: string[];
+  showHotspots: boolean;
   targetRotation: MutableRefObject<TargetRotation>;
   onSelectHotspot: (hotspot: HotspotInfo) => void;
 };
@@ -480,6 +618,7 @@ function RightHandDrive() {
 export default function Turntable({
   locale,
   discoveredIds,
+  showHotspots,
   targetRotation,
   onSelectHotspot,
 }: Props) {
@@ -506,8 +645,8 @@ export default function Turntable({
   return (
     <group
       ref={groupRef}
-      position={isMobile ? [0, -0.82, 0] : [0, -0.5, 0]}
-      scale={isMobile ? 0.66 : 0.9}
+      position={isMobile ? [0, -0.34, 0] : [0, -0.5, 0]}
+      scale={isMobile ? 0.58 : 0.9}
     >
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.18, 0]}>
         <circleGeometry args={[5.15, 160]} />
@@ -650,26 +789,6 @@ export default function Turntable({
         ),
       )}
 
-      {[-2.25, -1.05, 0.15, 1.35].map((x) => (
-        <Beam
-          key={`bridge-diag-left-${x}`}
-          position={[x, 0.46, -0.3]}
-          rotation={[0, 0, Math.PI / 4]}
-          args={[0.03, 0.42, 0.03]}
-          color="#641d1b"
-        />
-      ))}
-
-      {[-1.65, -0.45, 0.75, 1.95].map((x) => (
-        <Beam
-          key={`bridge-diag-right-${x}`}
-          position={[x, 0.46, 0.3]}
-          rotation={[0, 0, -Math.PI / 4]}
-          args={[0.03, 0.42, 0.03]}
-          color="#641d1b"
-        />
-      ))}
-
       <mesh position={[0, 0.505, 0]}>
         <boxGeometry args={[5.55, 0.032, 0.34]} />
         <meshStandardMaterial color="#6b5948" roughness={0.94} />
@@ -705,81 +824,75 @@ export default function Turntable({
       <LeftHandDrive />
       <RightHandDrive />
 
-      <mesh position={[-2.88, 0.44, 0]}>
-        <boxGeometry args={[0.12, 0.2, 0.58]} />
-        <meshStandardMaterial color="#c7b853" roughness={0.55} />
-      </mesh>
+      {showHotspots &&
+        hotspots.map((hotspot) => {
+          const isDiscovered = discoveredIds.includes(hotspot.id);
+          const labelPosition = isMobile
+            ? hotspot.mobileLabelPosition
+            : hotspot.labelPosition;
 
-      <mesh position={[2.88, 0.44, 0]}>
-        <boxGeometry args={[0.12, 0.2, 0.58]} />
-        <meshStandardMaterial color="#c7b853" roughness={0.55} />
-      </mesh>
-
-      {hotspots.map((hotspot) => {
-        const isDiscovered = discoveredIds.includes(hotspot.id);
-
-        return (
-          <group key={hotspot.id}>
-            <Line
-              points={[hotspot.anchorPosition, hotspot.labelPosition]}
-              color={isDiscovered ? "#15803d" : "#b00000"}
-              lineWidth={isDiscovered ? 2.25 : 1.5}
-              transparent
-              opacity={isDiscovered ? 1 : 0.85}
-            />
-
-            <mesh position={hotspot.anchorPosition}>
-              <sphereGeometry args={[isDiscovered ? 0.075 : 0.055, 20, 20]} />
-              <meshStandardMaterial
+          return (
+            <group key={hotspot.id}>
+              <Line
+                points={[hotspot.anchorPosition, labelPosition]}
                 color={isDiscovered ? "#15803d" : "#b00000"}
-                roughness={0.45}
+                lineWidth={isDiscovered ? 2.8 : 2.1}
+                transparent
+                opacity={isDiscovered ? 0.95 : 0.72}
               />
-            </mesh>
 
-            <Html position={hotspot.labelPosition} center distanceFactor={7}>
-              <button
-                type="button"
-                aria-label={
-                  isDiscovered
-                    ? `${hotspot.title[locale]} entdeckt`
-                    : hotspot.title[locale]
-                }
-                onPointerDown={(event) => event.stopPropagation()}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onSelectHotspot(hotspot);
-                }}
-                className={`
+              <mesh position={hotspot.anchorPosition}>
+                <sphereGeometry args={[isDiscovered ? 0.075 : 0.055, 20, 20]} />
+                <meshStandardMaterial
+                  color={isDiscovered ? "#15803d" : "#b00000"}
+                  roughness={0.45}
+                />
+              </mesh>
+
+              <Html position={labelPosition} center distanceFactor={7}>
+                <button
+                  type="button"
+                  aria-label={
+                    isDiscovered
+                      ? `${hotspot.title[locale]} entdeckt`
+                      : hotspot.title[locale]
+                  }
+                  onPointerDown={(event) => event.stopPropagation()}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onSelectHotspot(hotspot);
+                  }}
+                  className={`
                   flex
-                  min-h-10
-                  min-w-[92px]
+                  min-h-8
+                  min-w-[64px]
                   items-center
                   justify-center
                   rounded-full
-                  border-2
-                  px-3
-                  text-[10px]
+                  border
+                  px-2.5
+                  text-[8px]
                   font-black
                   uppercase
                   tracking-[0.08em]
-                  shadow-md
+                  shadow-[0_2px_6px_rgba(0,0,0,0.14)]
                   outline-none
                   focus-visible:ring-4
                   ${
                     isDiscovered
-                      ? "border-green-700 bg-green-700 text-white focus-visible:ring-green-700/30"
-                      : "border-red-700 bg-white text-red-700 focus-visible:ring-red-700/30"
+                      ? "border-green-700/70 bg-green-700 text-white focus-visible:ring-green-700/30"
+                      : "border-red-600/80 bg-white/96 text-red-700 focus-visible:ring-red-700/30"
                   }
                 `}
-              >
-                {isDiscovered
-                  ? `${hotspot.label[locale]} ✓`
-                  : hotspot.label[locale]}
-              </button>
-            </Html>
-          </group>
-        );
-      })}
+                >
+                  {isDiscovered
+                    ? `${hotspot.label[locale]} ✓`
+                    : hotspot.label[locale]}
+                </button>
+              </Html>
+            </group>
+          );
+        })}
     </group>
   );
 }
