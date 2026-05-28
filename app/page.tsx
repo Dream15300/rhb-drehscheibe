@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import Scene from "@/components/Scene";
 import type { HotspotInfo, Locale } from "@/components/Turntable";
@@ -54,15 +55,10 @@ const uiText = {
 
 export default function Home() {
   const [locale, setLocale] = useState<Locale>("de");
-
   const [screen, setScreen] = useState<Screen>("intro");
-
   const [activeHotspot, setActiveHotspot] = useState<HotspotInfo | null>(null);
-
   const [discoveredIds, setDiscoveredIds] = useState<string[]>([]);
-
   const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
-
   const [showHotspots, setShowHotspots] = useState(true);
 
   const text = uiText[locale];
@@ -73,7 +69,6 @@ export default function Home() {
 
   const quizResult = useMemo(() => {
     if (!activeHotspot || quizAnswer === null) return null;
-
     return quizAnswer === activeHotspot.quiz.correctOptionId;
   }, [activeHotspot, quizAnswer]);
 
@@ -116,7 +111,10 @@ export default function Home() {
               {text.intro}
             </p>
 
-            <div className="mt-6 inline-flex rounded-full border border-black/10 bg-white p-1 shadow-sm">
+            <div
+              className="mt-6 inline-flex rounded-full border border-black/10 bg-white p-1 shadow-sm"
+              aria-label="Sprache wählen"
+            >
               <button
                 type="button"
                 onClick={() => setLocale("de")}
@@ -226,6 +224,23 @@ export default function Home() {
             <h2 className="mt-4 max-w-full break-words text-[2rem] font-black leading-[0.95]">
               {activeHotspot.title[locale]}
             </h2>
+
+            <div className="mt-5 overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm">
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src={activeHotspot.image}
+                  alt={activeHotspot.imageAlt[locale]}
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                  priority
+                />
+              </div>
+
+              <p className="border-t border-black/5 px-4 py-3 text-xs leading-5 text-neutral-600">
+                {activeHotspot.imageAlt[locale]}
+              </p>
+            </div>
 
             <div className="mt-6 space-y-5">
               <section>
