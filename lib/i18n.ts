@@ -32,10 +32,9 @@ export type UiText = {
   toModel: string;
   reset: string;
   menu: string;
-  textSize: string;
-  textSizeNormal: string;
-  textSizeLarge: string;
-  textSizeXlarge: string;
+  modelLabel: string;
+  skipToContent: string;
+  introImageAlt: string;
 };
 
 export const uiText = {
@@ -70,10 +69,11 @@ export const uiText = {
     toModel: "Zurück zum Modell",
     reset: "Fortschritt zurücksetzen",
     menu: "Menü",
-    textSize: "Schriftgröße",
-    textSizeNormal: "Normal",
-    textSizeLarge: "Groß",
-    textSizeXlarge: "Sehr groß",
+    modelLabel:
+      "Interaktives 3D-Modell der Drehscheibe. Zum Drehen ziehen oder die Pfeiltasten verwenden.",
+    skipToContent: "Zum Inhalt springen",
+    introImageAlt:
+      "Historische handbetriebene Drehscheibe der Furka-Bergstrecke im Depot.",
   },
 
   fr: {
@@ -107,10 +107,11 @@ export const uiText = {
     toModel: "Retour au modèle",
     reset: "Réinitialiser la progression",
     menu: "Menu",
-    textSize: "Taille du texte",
-    textSizeNormal: "Normal",
-    textSizeLarge: "Grand",
-    textSizeXlarge: "Très grand",
+    modelLabel:
+      "Modèle 3D interactif de la plaque tournante. Faire glisser ou utiliser les touches fléchées pour tourner.",
+    skipToContent: "Aller au contenu",
+    introImageAlt:
+      "Plaque tournante manuelle historique de la ligne de la Furka au dépôt.",
   },
 
   en: {
@@ -144,9 +145,10 @@ export const uiText = {
     toModel: "Back to the model",
     reset: "Reset progress",
     menu: "Menu",
-    textSize: "Text size",
-    textSizeNormal: "Normal",
-    textSizeLarge: "Large",
-    textSizeXlarge: "Extra large",
+    modelLabel:
+      "Interactive 3D model of the turntable. Drag or use the arrow keys to rotate.",
+    skipToContent: "Skip to content",
+    introImageAlt:
+      "Historic hand-operated turntable of the Furka mountain line at the depot.",
   },
 } satisfies Record<Locale, UiText>;

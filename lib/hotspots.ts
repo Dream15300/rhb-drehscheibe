@@ -29,26 +29,31 @@ export const hotspots: HotspotInfo[] = [
   {
     id: "bridge",
     label: { de: "Brücke", fr: "Pont", en: "Bridge" },
-    title: { de: "Gleisbrücke", fr: "Pont de voie", en: "Track bridge" },
+    title: {
+      de: "Drehscheibenbrücke",
+      fr: "Pont de la plaque tournante",
+      en: "Turntable bridge",
+    },
     shortText: {
       de: "Die Gleisbrücke trägt das meterspurige Gleis der Drehscheibe über der Grube.",
       fr: "Le pont porte la voie métrique au-dessus de la fosse.",
       en: "The track bridge carries the metre-gauge track of the turntable across the pit.",
     },
     technicalText: {
-      de: "Die Brücke besteht aus genieteten bzw. verschraubten Stahlträgern mit Querverbänden. Sie nimmt das Gewicht von Lokomotiven und Wagen auf und leitet die Kräfte in Lager und Laufring ab. Die schmale Bauweise ist typisch für kleinere Schmalspur-Drehscheiben im Depotbetrieb.",
-      fr: "Le pont se compose de poutres métalliques rivetées ou boulonnées avec entretoises. Il reprend les charges des locomotives et des voitures et transmet les forces au pivot et à l’anneau de roulement.",
-      en: "The bridge consists of riveted or bolted steel girders with cross-bracing. It carries the weight of locomotives and carriages and transfers the loads into the pivot and running ring. The slim design is typical of smaller narrow-gauge turntables in depot use.",
+      de: "Die Brücke besteht aus genieteten bzw. verschraubten Stahlträgern mit Querverbänden. Sie nimmt das Gewicht von Lokomotiven und Wagen auf und leitet die Kräfte in Lager und Laufkranz ab. Die schmale Bauweise ist typisch für kleinere Schmalspur-Drehscheiben im Depotbetrieb.",
+      fr: "Le pont se compose de poutres métalliques rivetées ou boulonnées avec entretoises. Il reprend les charges des locomotives et des voitures et transmet les forces au pivot et à la couronne de roulement.",
+      en: "The bridge consists of riveted or bolted steel girders with cross-bracing. It carries the weight of locomotives and carriages and transfers the loads into the pivot and running rim. The slim design is typical of smaller narrow-gauge turntables in depot use.",
     },
     whyText: {
-      de: "Nur eine steife und exakt geführte Brücke ermöglicht das sichere Ausrichten der Gleise im Depot Realp.",
-      fr: "Seul un pont rigide et guidé avec précision permet un alignement sûr des voies du dépôt de Realp.",
-      en: "Only a rigid, precisely guided bridge allows the tracks at the Realp depot to be aligned safely.",
+      de: "Nur eine steife und exakt geführte Brücke ermöglicht das sichere Ausrichten der Gleise – heute im DFB-Depot Realp, wohin diese RhB-Drehscheibe aus Pontresina versetzt wurde.",
+      fr: "Seul un pont rigide et guidé avec précision permet un alignement sûr des voies, aujourd'hui au dépôt DFB de Realp, où cette plaque tournante RhB de Pontresina a été déplacée.",
+      en: "Only a rigid, precisely guided bridge allows the tracks to be aligned safely – today at the DFB depot in Realp, where this RhB turntable from Pontresina was relocated.",
     },
+    image: "/images/Drehscheibenbrücke.jpg",
     imageAlt: {
-      de: "Detailbild der Gleisbrücke der Drehscheibe in Realp.",
-      fr: "Image de détail du pont de voie de la plaque tournante à Realp.",
-      en: "Close-up of the track bridge of the turntable in Realp.",
+      de: "Detailbild der Drehscheibenbrücke im Depot Realp.",
+      fr: "Image de détail du pont de la plaque tournante au dépôt de Realp.",
+      en: "Close-up of the turntable bridge at the Realp depot.",
     },
     anchorPosition: [-1.55, 0.58, -0.32],
     labelPosition: [-2.28, 1.08, -0.95],
@@ -85,9 +90,9 @@ export const hotspots: HotspotInfo[] = [
     id: "truss",
     label: { de: "Fachwerk", fr: "Treillis", en: "Truss" },
     title: {
-      de: "Stahlfachwerk",
-      fr: "Treillis métallique",
-      en: "Steel truss",
+      de: "Fachwerkträger",
+      fr: "Poutre en treillis",
+      en: "Truss girder",
     },
     shortText: {
       de: "Das Stahlfachwerk macht die Drehscheibe leicht und gleichzeitig verwindungssteif.",
@@ -95,19 +100,20 @@ export const hotspots: HotspotInfo[] = [
       en: "The steel truss keeps the turntable light yet resistant to twisting.",
     },
     technicalText: {
-      de: "Die radialen und diagonalen Streben bilden ein Fachwerk aus Dreiecken. Diese Bauweise reduziert das Gewicht und erleichtert den Handbetrieb der Drehscheibe. Solche Konstruktionen waren bei meterspurigen Bergbahnen üblich.",
-      fr: "Les barres radiales et diagonales forment une structure triangulée. Cette construction réduit le poids et facilite la rotation manuelle.",
-      en: "The radial and diagonal struts form a truss made of triangles. This design reduces weight and makes the turntable easier to operate by hand. Such structures were common on metre-gauge mountain railways.",
+      de: "Die radialen und diagonalen Streben bilden ein Fachwerk aus Dreiecken. Diese Bauweise reduziert das Gewicht und erleichtert den Handbetrieb der Drehscheibe. Solche Konstruktionen waren bei meterspurigen Bahnen wie der Rhätischen Bahn (RhB) üblich, von der diese Drehscheibe ursprünglich stammt.",
+      fr: "Les barres radiales et diagonales forment une structure triangulée. Cette construction réduit le poids et facilite la rotation manuelle. De telles structures étaient courantes sur les réseaux métriques comme les Chemins de fer rhétiques (RhB), d'où provient cette plaque tournante.",
+      en: "The radial and diagonal struts form a truss made of triangles. This design reduces weight and makes the turntable easier to operate by hand. Such structures were common on metre-gauge railways like the Rhaetian Railway (RhB), which this turntable originally came from.",
     },
     whyText: {
       de: "Je geringer die bewegte Masse ist, desto einfacher lässt sich die Drehscheibe von Hand bewegen.",
       fr: "Plus la masse mobile est faible, plus la plaque tournante peut être tournée facilement à la main.",
       en: "The lower the moving mass, the easier the turntable is to rotate by hand.",
     },
+    image: "/images/Fachwerkträger.jpg",
     imageAlt: {
-      de: "Detailbild des Stahlfachwerks der handbetriebenen Drehscheibe.",
-      fr: "Image de détail du treillis métallique de la plaque tournante manuelle.",
-      en: "Close-up of the steel truss of the hand-operated turntable.",
+      de: "Detailbild des Fachwerkträgers der Drehscheibenbrücke.",
+      fr: "Image de détail de la poutre en treillis du pont de la plaque tournante.",
+      en: "Close-up of the truss girder of the turntable bridge.",
     },
     anchorPosition: [-2.0, 0.24, 1.05],
     labelPosition: [-3.0, 0.74, 1.56],
@@ -159,6 +165,7 @@ export const hotspots: HotspotInfo[] = [
       fr: "L’alignement précis des rails est essentiel pour déplacer les véhicules en sécurité.",
       en: "Precise track alignment is essential so locomotives and carriages can be moved safely.",
     },
+    image: "/images/Brückengleis.jpg",
     imageAlt: {
       de: "Detailbild des Brückengleises und der Anschlussgleise.",
       fr: "Image de détail de la voie du pont et des voies de raccordement.",
@@ -199,9 +206,9 @@ export const hotspots: HotspotInfo[] = [
     id: "pivot",
     label: { de: "Lager", fr: "Pivot", en: "Pivot" },
     title: {
-      de: "Zentrales Drehlager",
-      fr: "Pivot central",
-      en: "Central pivot bearing",
+      de: "Königszapfen / Mittellager",
+      fr: "Pivot central / palier central",
+      en: "King pin / centre bearing",
     },
     shortText: {
       de: "Das zentrale Lager bildet die Drehachse der Drehscheibe.",
@@ -209,19 +216,20 @@ export const hotspots: HotspotInfo[] = [
       en: "The central bearing forms the turntable's axis of rotation.",
     },
     technicalText: {
-      de: "Im Zentrum der Grube befindet sich das Drehlager der Brücke. Zusammen mit Laufring und Laufrollen führt es die Konstruktion beim Drehen und nimmt einen Teil der auftretenden Kräfte auf.",
-      fr: "Au centre de la fosse se trouve le pivot de la structure. Avec l’anneau et les galets, il guide la rotation et reprend une partie des forces.",
-      en: "The bridge's pivot bearing sits at the centre of the pit. Together with the running ring and rollers it guides the structure as it turns and absorbs part of the forces involved.",
+      de: "Im Zentrum der Grube befindet sich das Drehlager der Brücke. Zusammen mit Laufkranz und Laufrollen führt es die Konstruktion beim Drehen und nimmt einen Teil der auftretenden Kräfte auf.",
+      fr: "Au centre de la fosse se trouve le pivot de la structure. Avec la couronne et les galets, il guide la rotation et reprend une partie des forces.",
+      en: "The bridge's pivot bearing sits at the centre of the pit. Together with the running rim and rollers it guides the structure as it turns and absorbs part of the forces involved.",
     },
     whyText: {
       de: "Ohne präzise Lagerung könnte die Brücke nicht exakt auf die Gleise des Depots Realp ausgerichtet werden.",
       fr: "Sans guidage précis, le pont ne pourrait pas être aligné correctement sur les voies du dépôt de Realp.",
       en: "Without precise bearings the bridge could not be aligned exactly with the tracks of the Realp depot.",
     },
+    image: "/images/Koenigsstuhl.png",
     imageAlt: {
-      de: "Detailbild des zentralen Drehlagers der Drehscheibe.",
+      de: "Detailbild des Königszapfens (Mittellager) der Drehscheibe.",
       fr: "Image de détail du pivot central de la plaque tournante.",
-      en: "Close-up of the central pivot bearing of the turntable.",
+      en: "Close-up of the king pin (centre bearing) of the turntable.",
     },
     anchorPosition: [0, 0.5, 0],
     labelPosition: [0.62, 1.08, 0.74],
@@ -256,15 +264,11 @@ export const hotspots: HotspotInfo[] = [
 
   {
     id: "handwheel",
-    label: {
-      de: "Handantrieb",
-      fr: "Commande manuelle",
-      en: "Hand drive",
-    },
+    label: { de: "Handantrieb", fr: "Manivelle", en: "Hand drive" },
     title: {
-      de: "Handantrieb",
-      fr: "Commande manuelle",
-      en: "Hand drive",
+      de: "Handkurbelantrieb",
+      fr: "Entraînement à manivelle",
+      en: "Hand crank drive",
     },
     shortText: {
       de: "Die Drehscheibe wird von Hand bewegt und ausgerichtet.",
@@ -272,19 +276,20 @@ export const hotspots: HotspotInfo[] = [
       en: "The turntable is moved and aligned by hand.",
     },
     technicalText: {
-      de: "Kleinere Drehscheiben der Furka-Oberalp-Bahn und der heutigen DFB wurden von Hand bedient. Über Hebel und Handantrieb wird die Brücke langsam gedreht, bis das gewünschte Anschlussgleis erreicht ist.",
-      fr: "Les petites plaques tournantes du FO et du DFB étaient commandées manuellement. Des leviers permettent de tourner lentement le pont jusqu’à la voie voulue.",
-      en: "Smaller turntables of the Furka-Oberalp railway and today's DFB were operated by hand. Levers and a hand drive slowly turn the bridge until the desired approach track is reached.",
+      de: "Diese handbetriebene Drehscheibe stammt ursprünglich aus Pontresina von der Rhätischen Bahn (RhB) und steht heute im DFB-Depot Realp. Über Hebel und Handantrieb wird die Brücke langsam von Hand gedreht, bis das gewünschte Anschlussgleis erreicht ist.",
+      fr: "Cette plaque tournante manuelle provient à l'origine de Pontresina, des Chemins de fer rhétiques (RhB), et se trouve aujourd'hui au dépôt DFB de Realp. À l'aide de leviers et d'une commande manuelle, le pont est tourné lentement jusqu'à la voie de raccordement souhaitée.",
+      en: "This hand-operated turntable originally comes from Pontresina on the Rhaetian Railway (RhB) and now stands at the DFB depot in Realp. Using levers and a hand drive, the bridge is slowly turned until the desired connecting track is reached.",
     },
     whyText: {
       de: "Der Handbetrieb ist robust, wartungsarm und unabhängig von elektrischer Energie.",
       fr: "La commande manuelle est robuste, simple et indépendante de l’électricité.",
       en: "Hand operation is robust, low-maintenance and independent of electrical power.",
     },
+    image: "/images/Handkurbelantrieb.png",
     imageAlt: {
-      de: "Detailbild des Handantriebs mit Hebel oder Kurbel.",
-      fr: "Image de détail de la commande manuelle avec levier ou manivelle.",
-      en: "Close-up of the hand drive with lever or crank.",
+      de: "Detailbild des Handkurbelantriebs der Drehscheibe.",
+      fr: "Image de détail de l’entraînement à manivelle de la plaque tournante.",
+      en: "Close-up of the hand crank drive of the turntable.",
     },
     anchorPosition: [2.86, 0.82, -0.42],
     labelPosition: [3.36, 1.22, -1.12],
@@ -319,16 +324,16 @@ export const hotspots: HotspotInfo[] = [
 
   {
     id: "ring",
-    label: { de: "Laufring", fr: "Anneau", en: "Running ring" },
+    label: { de: "Laufkranz", fr: "Couronne", en: "Running rim" },
     title: {
-      de: "Umlaufender Laufring",
-      fr: "Anneau de roulement",
-      en: "Circular running ring",
+      de: "Laufkranz / Ringschiene",
+      fr: "Couronne de roulement / rail annulaire",
+      en: "Running rim / ring rail",
     },
     shortText: {
-      de: "Der Laufring stabilisiert die Drehscheibe am Rand der Grube.",
-      fr: "L’anneau de roulement stabilise la plaque au bord de la fosse.",
-      en: "The running ring stabilises the turntable at the edge of the pit.",
+      de: "Der Laufkranz stabilisiert die Drehscheibe am Rand der Grube.",
+      fr: "La couronne de roulement stabilise la plaque au bord de la fosse.",
+      en: "The running rim stabilises the turntable at the edge of the pit.",
     },
     technicalText: {
       de: "Die Brücke läuft mit Laufrollen auf dem ringförmigen Schienenkranz der Grube. Dadurch werden Kräfte verteilt und die Drehbewegung stabil geführt.",
@@ -336,23 +341,24 @@ export const hotspots: HotspotInfo[] = [
       en: "The bridge runs on rollers along the ring-shaped rail at the rim of the pit. This distributes the forces and keeps the rotation steady.",
     },
     whyText: {
-      de: "Der Laufring verhindert Kippbewegungen und sorgt für ruhigen Lauf beim Drehen und Befahren.",
-      fr: "L’anneau réduit les mouvements de basculement et assure une rotation régulière.",
-      en: "The running ring prevents tilting and ensures smooth running when turning and being driven over.",
+      de: "Der Laufkranz verhindert Kippbewegungen und sorgt für ruhigen Lauf beim Drehen und Befahren.",
+      fr: "La couronne réduit les mouvements de basculement et assure une rotation régulière.",
+      en: "The running rim prevents tilting and ensures smooth running when turning and being driven over.",
     },
+    image: "/images/Laufkranz.jpg",
     imageAlt: {
-      de: "Detailbild des umlaufenden Laufrings am Rand der Drehscheibengrube.",
-      fr: "Image de détail de l’anneau de roulement au bord de la fosse.",
-      en: "Close-up of the circular running ring at the edge of the turntable pit.",
+      de: "Detailbild des Laufkranzes (Ringschiene) am Rand der Drehscheibengrube.",
+      fr: "Image de détail de la couronne de roulement au bord de la fosse.",
+      en: "Close-up of the running rim (ring rail) at the edge of the turntable pit.",
     },
     anchorPosition: [0.15, 0.06, 3.08],
     labelPosition: [0.92, 0.72, 2.72],
     mobileLabelPosition: [0.9, 0.9, 2.48],
     quiz: {
       question: {
-        de: "Wozu dient der Laufring?",
-        fr: "À quoi sert l’anneau de roulement?",
-        en: "What is the running ring for?",
+        de: "Wozu dient der Laufkranz?",
+        fr: "À quoi sert la couronne de roulement?",
+        en: "What is the running rim for?",
       },
       correctOptionId: "guide",
       options: [
@@ -380,9 +386,9 @@ export const hotspots: HotspotInfo[] = [
     id: "locking",
     label: { de: "Verriegelung", fr: "Verrou", en: "Locking" },
     title: {
-      de: "Mechanische Verriegelung",
-      fr: "Verrouillage mécanique",
-      en: "Mechanical locking",
+      de: "Gleisverriegelung / Verriegelungsbolzen",
+      fr: "Verrouillage de voie / verrou",
+      en: "Track lock / locking bolt",
     },
     shortText: {
       de: "Die Verriegelung fixiert die Drehscheibe exakt auf einem Anschlussgleis.",
@@ -390,9 +396,9 @@ export const hotspots: HotspotInfo[] = [
       en: "The locking mechanism fixes the turntable exactly on an approach track.",
     },
     technicalText: {
-      de: "Nach dem Ausrichten wird die Brücke mechanisch verriegelt. Dadurch kann sie sich beim Befahren nicht unbeabsichtigt verdrehen. Historische Drehscheiben der Furka-Oberalp-Bahn und der heutigen DFB verwendeten einfache, robuste Sperr- und Riegelsysteme.",
-      fr: "Après l’alignement, le pont est verrouillé mécaniquement. Cela empêche toute rotation involontaire pendant le passage des véhicules.",
-      en: "After alignment the bridge is locked mechanically so it cannot turn unintentionally while being driven over. Historic turntables of the Furka-Oberalp railway and today's DFB used simple, robust locking and bolt systems.",
+      de: "Nach dem Ausrichten wird die Brücke mechanisch verriegelt. Dadurch kann sie sich beim Befahren nicht unbeabsichtigt verdrehen. Historische Drehscheiben wie diese aus Pontresina (RhB) verwendeten einfache, robuste Sperr- und Riegelsysteme.",
+      fr: "Après l'alignement, le pont est verrouillé mécaniquement. Cela empêche toute rotation involontaire pendant le passage des véhicules. Les plaques tournantes historiques comme celle-ci, issue de Pontresina (RhB), utilisaient des systèmes de verrouillage simples et robustes.",
+      en: "After alignment the bridge is locked mechanically so it cannot turn unintentionally while being driven over. Historic turntables such as this one from Pontresina (RhB) used simple, robust locking and bolt systems.",
     },
     whyText: {
       de: "Ohne Verriegelung könnten sich die Schienen beim Befahren verschieben. Das würde den sicheren Fahrzeugübergang gefährden.",
@@ -449,15 +455,16 @@ export const hotspots: HotspotInfo[] = [
       en: "The pit houses the structure of the turntable.",
     },
     technicalText: {
-      de: "Die Drehscheibe liegt in einer kreisförmigen Grube aus Beton und Mauerwerk. In ihr befinden sich Lager, Laufrollen und der umlaufende Laufring. Solche Grubenbauweisen waren bei Schweizer Schmalspurbahnen weit verbreitet.",
-      fr: "La plaque se trouve dans une fosse circulaire en béton et maçonnerie. Elle contient le pivot, les galets et l’anneau de roulement.",
-      en: "The turntable sits in a circular pit of concrete and masonry. It contains the bearing, the rollers and the circular running ring. Such pit constructions were widespread on Swiss narrow-gauge railways.",
+      de: "Die Drehscheibe liegt in einer kreisförmigen Grube aus Beton und Mauerwerk. In ihr befinden sich Lager, Laufrollen und der umlaufende Laufkranz. Solche Grubenbauweisen waren bei Schweizer Schmalspurbahnen wie der Rhätischen Bahn (RhB) weit verbreitet.",
+      fr: "La plaque se trouve dans une fosse circulaire en béton et maçonnerie. Elle contient le pivot, les galets et la couronne de roulement. De telles fosses étaient répandues sur les chemins de fer suisses à voie étroite comme les Chemins de fer rhétiques (RhB).",
+      en: "The turntable sits in a circular pit of concrete and masonry. It contains the bearing, the rollers and the running rim. Such pit constructions were widespread on Swiss narrow-gauge railways like the Rhaetian Railway (RhB).",
     },
     whyText: {
       de: "Die Grube ermöglicht eine niedrige Bauhöhe und führt die Drehscheibe stabil im Boden.",
       fr: "La fosse permet une faible hauteur de construction et guide la plaque de manière stable.",
       en: "The pit allows a low overall height and holds the turntable steadily in the ground.",
     },
+    image: "/images/Drehscheibengrube.jpg",
     imageAlt: {
       de: "Übersichtsbild der Drehscheibengrube in Grubenbauweise.",
       fr: "Vue d’ensemble de la fosse de la plaque tournante.",
@@ -477,9 +484,9 @@ export const hotspots: HotspotInfo[] = [
         {
           id: "support",
           label: {
-            de: "Sie nimmt Lager und Laufring auf.",
-            fr: "Elle contient le pivot et l’anneau.",
-            en: "It houses the bearing and the running ring.",
+            de: "Sie nimmt Lager und Laufkranz auf.",
+            fr: "Elle contient le pivot et la couronne.",
+            en: "It houses the bearing and the running rim.",
           },
         },
         {

@@ -2,6 +2,7 @@
 
 import type { HotspotInfo, Locale } from "@/lib/hotspots";
 import type { UiText } from "@/lib/i18n";
+import { useFocusOnMount } from "@/lib/useFocusOnMount";
 
 type Props = {
   text: UiText;
@@ -31,6 +32,7 @@ export default function QuizScreen({
 }: Props) {
   const answered = selectedOptionId !== null;
   const correctId = hotspot.quiz.correctOptionId;
+  const headingRef = useFocusOnMount<HTMLHeadingElement>();
 
   // Antworten in der vorgegebenen Reihenfolge anzeigen; bei fehlender/ungültiger
   // Reihenfolge auf die Originalreihenfolge zurückfallen.
@@ -57,12 +59,12 @@ export default function QuizScreen({
     if (optionId === selectedOptionId) {
       return `${base} border-red-700 bg-red-700 text-white`;
     }
-    return `${base} border-black/10 bg-white text-neutral-400`;
+    return `${base} border-black/10 bg-white text-neutral-600`;
   }
 
   return (
     <section className="absolute inset-0 z-50 flex flex-col overflow-hidden bg-[#f5f1ea] text-neutral-950">
-      <div className="flex shrink-0 items-center justify-between gap-3 px-5 pt-5">
+      <div className="mx-auto flex w-full max-w-2xl shrink-0 items-center justify-between gap-3 px-5 pt-5">
         <button
           type="button"
           onClick={onBack}
@@ -80,27 +82,53 @@ export default function QuizScreen({
         </button>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-32">
+      <div className="mx-auto w-full max-w-2xl min-h-0 flex-1 overflow-y-auto px-5 pb-32">
         <p className="text-xs font-bold uppercase tracking-[0.32em] text-red-700">
           {text.quiz}
         </p>
 
-        <h2 className="mt-4 text-3xl font-black leading-tight">
+        <h2
+          ref={headingRef}
+          tabIndex={-1}
+          className="mt-4 text-3xl font-black leading-tight outline-none"
+        >
           {hotspot.quiz.question[locale]}
         </h2>
 
         <div className="mt-8 space-y-3">
-          {orderedOptions.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              onClick={() => onAnswer(option.id)}
-              aria-pressed={selectedOptionId === option.id}
-              className={optionClasses(option.id)}
-            >
-              {option.label[locale]}
-            </button>
-          ))}
+          {orderedOptions.map((option) => {
+            const isCorrect = option.id === correctId;
+            const isSelectedWrong =
+              answered && option.id === selectedOptionId && !isCorrect;
+
+            return (
+              <button
+                key={option.id}
+                type="button"
+                onClick={() => onAnswer(option.id)}
+                aria-pressed={selectedOptionId === option.id}
+                className={optionClasses(option.id)}
+              >
+                <span className="flex items-center justify-between gap-3">
+                  <span>{option.label[locale]}</span>
+
+                  {answered && isCorrect && (
+                    <span className="text-xl leading-none">
+                      <span aria-hidden="true">✓</span>
+                      <span className="sr-only">{text.correct}</span>
+                    </span>
+                  )}
+
+                  {isSelectedWrong && (
+                    <span className="text-xl leading-none">
+                      <span aria-hidden="true">✗</span>
+                      <span className="sr-only">{text.wrong}</span>
+                    </span>
+                  )}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {result !== null && (
@@ -122,7 +150,7 @@ export default function QuizScreen({
           <button
             type="button"
             onClick={onNext}
-            className="min-h-14 w-full rounded-2xl bg-red-700 px-4 text-sm font-black uppercase tracking-wider text-white shadow-sm"
+            className="mx-auto block min-h-14 w-full max-w-2xl rounded-2xl bg-red-700 px-4 text-sm font-black uppercase tracking-wider text-white shadow-sm"
           >
             {text.next} →
           </button>

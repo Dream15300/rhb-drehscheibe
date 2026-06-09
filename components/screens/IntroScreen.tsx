@@ -1,58 +1,65 @@
 "use client";
 
+import Image from "next/image";
 import { type Locale, locales, type UiText } from "@/lib/i18n";
-import { type FontScale, fontScales } from "@/lib/preferences";
+import { useFocusOnMount } from "@/lib/useFocusOnMount";
 
 type Props = {
   text: UiText;
   locale: Locale;
   hasProgress: boolean;
-  fontScale: FontScale;
   onSelectLocale: (locale: Locale) => void;
-  onSelectFontScale: (scale: FontScale) => void;
   onStart: () => void;
   onReset: () => void;
-};
-
-const fontScaleLabel: Record<FontScale, keyof UiText> = {
-  normal: "textSizeNormal",
-  large: "textSizeLarge",
-  xlarge: "textSizeXlarge",
-};
-
-const fontScaleGlyphSize: Record<FontScale, string> = {
-  normal: "text-sm",
-  large: "text-base",
-  xlarge: "text-lg",
 };
 
 export default function IntroScreen({
   text,
   locale,
   hasProgress,
-  fontScale,
   onSelectLocale,
-  onSelectFontScale,
   onStart,
   onReset,
 }: Props) {
+  const headingRef = useFocusOnMount<HTMLHeadingElement>();
+
   return (
-    <section className="absolute inset-0 z-50 flex flex-col justify-between bg-[#f5f1ea] px-5 py-6">
-      <div>
-        <p className="text-xs font-bold uppercase tracking-[0.32em] text-red-700">
+    // Höhen-adaptiv: Basis-Schriftgröße folgt der Viewport-Höhe (clamp + dvh),
+    // alle Innenmaße in `em` – so passt der Screen immer ohne Scrollen.
+    <section
+      style={{ fontSize: "clamp(10px, 2.05dvh, 18px)" }}
+      className="absolute inset-0 z-50 flex h-full flex-col overflow-hidden bg-[#f5f1ea] px-[1.4em] py-[1.3em]"
+    >
+      <div className="flex min-h-0 flex-1 flex-col">
+        <p className="text-[0.8em] font-bold uppercase tracking-[0.32em] text-red-700">
           {text.appLabel}
         </p>
 
-        <h1 className="mt-5 max-w-sm text-4xl font-black leading-tight">
+        <h1
+          ref={headingRef}
+          tabIndex={-1}
+          className="mt-[0.8em] max-w-[12em] text-[2em] font-black leading-[1.05] outline-none"
+        >
           {text.title}
         </h1>
 
-        <p className="mt-5 max-w-md text-lg leading-8 text-neutral-700">
+        <div className="relative mt-[0.9em] aspect-[2/1] w-full max-w-[26em] max-h-[15em] overflow-hidden rounded-[0.9em] border border-black/10 shadow-sm">
+          <Image
+            src="/images/drehscheibe.png"
+            alt={text.introImageAlt}
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+        </div>
+
+        <p className="mt-[0.9em] max-w-[24em] text-[1.05em] leading-[1.4] text-neutral-700">
           {text.intro}
         </p>
 
         <div
-          className="mt-6 inline-flex rounded-full border border-black/10 bg-white p-1 shadow-sm"
+          className="mt-[1em] inline-flex w-fit rounded-full border border-black/10 bg-white p-[0.2em] shadow-sm"
           role="group"
           aria-label={text.languageLabel}
         >
@@ -62,7 +69,7 @@ export default function IntroScreen({
               type="button"
               onClick={() => onSelectLocale(option)}
               aria-pressed={locale === option}
-              className={`min-h-11 rounded-full px-5 text-sm font-bold ${
+              className={`min-h-[2.6em] rounded-full px-[1.3em] text-[0.95em] font-bold ${
                 locale === option
                   ? "bg-red-700 text-white"
                   : "bg-transparent text-neutral-800"
@@ -72,44 +79,13 @@ export default function IntroScreen({
             </button>
           ))}
         </div>
-
-        <div className="mt-6">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500">
-            {text.textSize}
-          </p>
-
-          <div
-            className="mt-2 inline-flex rounded-full border border-black/10 bg-white p-1 shadow-sm"
-            role="group"
-            aria-label={text.textSize}
-          >
-            {fontScales.map((scale) => (
-              <button
-                key={scale}
-                type="button"
-                onClick={() => onSelectFontScale(scale)}
-                aria-pressed={fontScale === scale}
-                aria-label={text[fontScaleLabel[scale]]}
-                className={`flex min-h-11 min-w-12 items-center justify-center rounded-full px-4 font-black leading-none ${
-                  fontScaleGlyphSize[scale]
-                } ${
-                  fontScale === scale
-                    ? "bg-red-700 text-white"
-                    : "bg-transparent text-neutral-800"
-                }`}
-              >
-                A
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="mt-[0.8em] flex flex-col gap-[0.6em]">
         <button
           type="button"
           onClick={onStart}
-          className="min-h-14 rounded-2xl bg-red-700 px-5 text-base font-black uppercase tracking-wider text-white shadow-lg"
+          className="min-h-[3em] rounded-[0.9em] bg-red-700 px-[1.3em] text-[1.05em] font-black uppercase tracking-wider text-white shadow-lg"
         >
           {text.start}
         </button>
@@ -118,7 +94,7 @@ export default function IntroScreen({
           <button
             type="button"
             onClick={onReset}
-            className="min-h-11 self-center text-sm font-bold uppercase tracking-wider text-neutral-500 underline underline-offset-4"
+            className="min-h-[2.6em] self-center text-[0.85em] font-bold uppercase tracking-wider text-neutral-600 underline underline-offset-4"
           >
             {text.reset}
           </button>

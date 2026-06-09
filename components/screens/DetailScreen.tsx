@@ -3,6 +3,7 @@
 import Image from "next/image";
 import type { HotspotInfo, Locale } from "@/lib/hotspots";
 import type { UiText } from "@/lib/i18n";
+import { useFocusOnMount } from "@/lib/useFocusOnMount";
 
 type Props = {
   text: UiText;
@@ -23,9 +24,11 @@ export default function DetailScreen({
   onMarkDiscovered,
   onOpenQuiz,
 }: Props) {
+  const headingRef = useFocusOnMount<HTMLHeadingElement>();
+
   return (
     <section className="absolute inset-0 z-50 flex flex-col overflow-hidden bg-[#f5f1ea] text-neutral-950">
-      <div className="shrink-0 px-5 pt-5">
+      <div className="mx-auto w-full max-w-2xl shrink-0 px-5 pt-5">
         <button
           type="button"
           onClick={onBack}
@@ -35,24 +38,28 @@ export default function DetailScreen({
         </button>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-32">
+      <div className="mx-auto w-full max-w-2xl min-h-0 flex-1 overflow-y-auto px-5 pb-32">
         <p className="text-xs font-bold uppercase tracking-[0.32em] text-red-700">
           {text.component}
         </p>
 
-        <h2 className="mt-4 max-w-full break-words text-[2rem] font-black leading-[0.95]">
+        <h2
+          ref={headingRef}
+          tabIndex={-1}
+          className="mt-4 max-w-full break-words text-[2rem] font-black leading-[0.95] outline-none"
+        >
           {hotspot.title[locale]}
         </h2>
 
         {hotspot.image && (
           <div className="mt-5 overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm">
-            <div className="relative aspect-[4/3] w-full">
+            <div className="relative aspect-[4/3] w-full bg-neutral-100">
               <Image
                 src={hotspot.image}
                 alt={hotspot.imageAlt[locale]}
                 fill
-                className="object-cover"
-                sizes="100vw"
+                className="object-contain"
+                sizes="(min-width: 768px) 42rem, 100vw"
                 priority
               />
             </div>
@@ -96,26 +103,28 @@ export default function DetailScreen({
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 z-10 flex w-full gap-3 border-t border-black/10 bg-[#f5f1ea]/95 px-5 pb-5 pt-4 backdrop-blur">
-        <button
-          type="button"
-          onClick={onMarkDiscovered}
-          className={`min-h-14 flex-1 rounded-2xl border px-4 text-sm font-black uppercase tracking-wider shadow-sm ${
-            isDiscovered
-              ? "border-green-800 bg-green-700 text-white"
-              : "border-black/10 bg-white text-neutral-950"
-          }`}
-        >
-          {isDiscovered ? text.discoveredDone : text.discovered}
-        </button>
+      <div className="absolute bottom-0 left-0 z-10 w-full border-t border-black/10 bg-[#f5f1ea]/95 px-5 pb-5 pt-4 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-2xl gap-3">
+          <button
+            type="button"
+            onClick={onMarkDiscovered}
+            className={`min-h-14 flex-1 rounded-2xl border px-4 text-sm font-black uppercase tracking-wider shadow-sm ${
+              isDiscovered
+                ? "border-green-800 bg-green-700 text-white"
+                : "border-black/10 bg-white text-neutral-950"
+            }`}
+          >
+            {isDiscovered ? text.discoveredDone : text.discovered}
+          </button>
 
-        <button
-          type="button"
-          onClick={onOpenQuiz}
-          className="min-h-14 flex-1 rounded-2xl bg-red-700 px-4 text-sm font-black uppercase tracking-wider text-white shadow-sm"
-        >
-          {text.quizButton}
-        </button>
+          <button
+            type="button"
+            onClick={onOpenQuiz}
+            className="min-h-14 flex-1 rounded-2xl bg-red-700 px-4 text-sm font-black uppercase tracking-wider text-white shadow-sm"
+          >
+            {text.quizButton}
+          </button>
+        </div>
       </div>
     </section>
   );

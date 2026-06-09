@@ -17,8 +17,33 @@ technische Erklärungen und testen ihr Wissen in kleinen Quizfragen.
   Der Stand wird pro Gerät im `localStorage` gespeichert (kein Cross-Device-Sync).
 - **PWA / Offline**: installierbar (Web-Manifest + Icons), funktioniert nach dem ersten Laden
   dank Service Worker auch offline.
-- **Barrierefreiheit**: `prefers-reduced-motion` wird respektiert, `<html lang>` folgt der
-  Sprachwahl, Bedienelemente sind als Buttons mit `aria`-Zuständen ausgezeichnet.
+- **Barrierefreiheit** (Details unten): Tastatur-Steuerung des Modells, höhen-adaptive Screens,
+  ausreichende Kontraste, Alternativtexte, Fokus-Management und reduzierte Bewegung.
+
+## Barrierefreiheit (WCAG 2.1 AA)
+
+Die App wird vorwiegend **draussen am Objekt** auf dem Smartphone genutzt. Der Fokus liegt
+daher auf gut lesbarer Schrift, hohem Kontrast und Bedienbarkeit ohne präzise Gesten. Ein
+Dark Mode ist bewusst nicht umgesetzt (Aussennutzung, heller Hintergrund).
+
+| Anforderung (Band E / WCAG) | Umsetzung | Ort |
+| --- | --- | --- |
+| **Bedienbar ohne präzise Geste** (2.5.1, 2.1.1) | Kernaufgabe (Bauteile öffnen) per Antippen grosser Buttons – kein präzises Drehen nötig; Modell zusätzlich per Pfeiltasten drehbar | `components/Scene.tsx`, `Turntable.tsx` |
+| **Tastaturbedienung / Fokus** (2.1.1, 2.4.7) | Alle Steuerelemente sind native `<button>`/`<a>`, fokussierbar, mit sichtbarem `focus-visible`-Ring; 3D-Bereich ist fokussierbar | überall |
+| **Fokus-Management** (2.4.3) | Beim Screenwechsel springt der Fokus auf die neue Überschrift | `lib/useFocusOnMount.ts` |
+| **Skip-Link** (2.4.1) | „Zum Inhalt springen" als erstes fokussierbares Element | `app/page.tsx` |
+| **Textgröße / Zoom** (1.4.4, 1.4.10) | Höhen-adaptive Navigations-Screens (Intro/Abschluss) passen sich der Viewport-Höhe an; Inhalte bleiben bei Browser-Zoom nutzbar (responsives Layout) | `IntroScreen`, `CompletedScreen` |
+| **Kontrast** (1.4.3) | Text mindestens 4.5:1 (zu helle Grautöne angehoben), Markenrot `red-700` auf Weiss | globale Klassen |
+| **Nicht nur Farbe** (1.4.1) | Quiz-Antworten zeigen zusätzlich ✓/✗ + Screenreader-Text; entdeckte Bauteile mit ✓ | `QuizScreen`, `Turntable` |
+| **Alternativtexte / Labels** (1.1.1, 4.1.2) | `alt` für Bilder, `aria-label` für 3D-Modell, Icons und Symbol-Buttons, `aria-pressed`/`aria-live` | überall |
+| **Zielgröße** (2.5.8) | Touch-Ziele ≥ 44 px (`min-h-11`), auch Hotspot-Marker | überall |
+| **Sprache** (3.1.1) | `<html lang>` folgt der gewählten Sprache (DE/FR/EN) | `app/page.tsx` |
+| **Bewegung reduzieren** (2.3.3) | `prefers-reduced-motion` deaktiviert das weiche Nachlaufen der Drehung | `components/Turntable.tsx` |
+
+**Prüfen / Nachweis (E2):** Tastaturdurchlauf (nur Tab/Pfeiltasten), Screenreader
+(NVDA/VoiceOver), Browser-DevTools-Audit (Lighthouse/axe) und Kontrast-Check. Da das
+3D-`<canvas>` selbst keine semantische Struktur liefert, erfolgt die inhaltliche Erkundung
+über die als Buttons ausgezeichneten Hotspots samt Detail-/Quiz-Screens.
 
 ## Tech-Stack
 

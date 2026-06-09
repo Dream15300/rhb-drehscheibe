@@ -474,16 +474,18 @@ export default function Turntable({
                   }}
                   className={`
                     flex
-                    min-h-8
+                    h-11
                     min-w-[64px]
                     items-center
                     justify-center
+                    whitespace-nowrap
                     rounded-full
                     border
-                    px-2.5
-                    text-[0.5rem]
+                    px-3
+                    text-[0.9rem]
                     font-black
                     uppercase
+                    leading-none
                     tracking-[0.08em]
                     shadow-[0_2px_6px_rgba(0,0,0,0.14)]
                     outline-none

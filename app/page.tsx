@@ -8,7 +8,6 @@ import IntroScreen from "@/components/screens/IntroScreen";
 import QuizScreen from "@/components/screens/QuizScreen";
 import { type HotspotInfo, hotspots } from "@/lib/hotspots";
 import { type Locale, uiText } from "@/lib/i18n";
-import { type FontScale, fontScalePercent } from "@/lib/preferences";
 import { usePersistentState } from "@/lib/usePersistentState";
 
 type Screen = "intro" | "explore" | "detail" | "quiz" | "completed";
@@ -39,10 +38,6 @@ export default function Home() {
     "rhb.discovered",
     [],
   );
-  const [fontScale, setFontScale] = usePersistentState<FontScale>(
-    "rhb.fontScale",
-    "normal",
-  );
   const [screen, setScreen] = useState<Screen>("intro");
   const [activeHotspot, setActiveHotspot] = useState<HotspotInfo | null>(null);
   const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
@@ -61,11 +56,6 @@ export default function Home() {
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
-
-  // Schriftgröße global über die Root-`font-size` skalieren (rem-basiert).
-  useEffect(() => {
-    document.documentElement.style.fontSize = fontScalePercent[fontScale];
-  }, [fontScale]);
 
   // Nur tatsächlich existierende Bauteile zählen (robust gegen alte Einträge).
   const discoveredCount = useMemo(
@@ -149,15 +139,25 @@ export default function Home() {
   }
 
   return (
-    <main className="fixed inset-0 h-dvh overflow-hidden bg-[#f5f1ea] text-neutral-950">
-      {screen === "intro" && (
+    <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-red-700 focus:px-4 focus:py-3 focus:text-sm focus:font-black focus:text-white focus:shadow-lg"
+      >
+        {text.skipToContent}
+      </a>
+
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="fixed inset-0 h-dvh overflow-hidden bg-[#f5f1ea] text-neutral-950 outline-none"
+      >
+        {screen === "intro" && (
         <IntroScreen
           text={text}
           locale={locale}
           hasProgress={discoveredCount > 0}
-          fontScale={fontScale}
           onSelectLocale={setLocale}
-          onSelectFontScale={setFontScale}
           onStart={() => setScreen("explore")}
           onReset={resetProgress}
         />
@@ -214,6 +214,7 @@ export default function Home() {
           onReset={resetProgress}
         />
       )}
-    </main>
+      </main>
+    </>
   );
 }
