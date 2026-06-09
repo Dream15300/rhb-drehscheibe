@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,6 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  ),
   title: "DFB Furka-Drehscheibe – interaktive Entdecker-App",
   description:
     "Interaktives 3D-Modell der handbetriebenen Furka-Drehscheibe (DFB). Drehe das Modell, entdecke die Bauteile und teste dein Wissen – zweisprachig Deutsch/Französisch.",
@@ -33,6 +37,11 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_CH",
   },
+  appleWebApp: {
+    capable: true,
+    title: "DFB Drehscheibe",
+    statusBarStyle: "default",
+  },
 };
 
 export const viewport: Viewport = {
@@ -51,7 +60,10 @@ export default function RootLayout({
       lang="de"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <ServiceWorkerRegister />
+      </body>
     </html>
   );
 }

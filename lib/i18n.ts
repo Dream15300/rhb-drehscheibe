@@ -1,8 +1,8 @@
-export type Locale = "de" | "fr";
+export type Locale = "de" | "fr" | "en";
 
 export type LocalizedText = Record<Locale, string>;
 
-export const locales: Locale[] = ["de", "fr"];
+export const locales: Locale[] = ["de", "fr", "en"];
 
 export type UiText = {
   appLabel: string;
@@ -25,6 +25,13 @@ export type UiText = {
   hotspotsOff: string;
   languageLabel: string;
   webglError: string;
+  progressLabel: string;
+  next: string;
+  completedTitle: string;
+  completedText: string;
+  toModel: string;
+  reset: string;
+  menu: string;
 };
 
 export const uiText = {
@@ -51,6 +58,14 @@ export const uiText = {
     languageLabel: "Sprache wählen",
     webglError:
       "Die 3D-Ansicht konnte nicht geladen werden. Bitte aktualisiere die Seite oder verwende einen Browser mit WebGL-Unterstützung.",
+    progressLabel: "entdeckt",
+    next: "Weiter zum nächsten Bauteil",
+    completedTitle: "Alles entdeckt! 🎉",
+    completedText:
+      "Du hast alle Bauteile der Drehscheibe erkundet. Gut gemacht!",
+    toModel: "Zurück zum Modell",
+    reset: "Fortschritt zurücksetzen",
+    menu: "Menü",
   },
 
   fr: {
@@ -76,5 +91,46 @@ export const uiText = {
     languageLabel: "Choisir la langue",
     webglError:
       "La vue 3D n'a pas pu être chargée. Veuillez actualiser la page ou utiliser un navigateur compatible WebGL.",
+    progressLabel: "découverts",
+    next: "Élément suivant",
+    completedTitle: "Tout est découvert! 🎉",
+    completedText:
+      "Tu as exploré tous les éléments de la plaque tournante. Bravo!",
+    toModel: "Retour au modèle",
+    reset: "Réinitialiser la progression",
+    menu: "Menu",
+  },
+
+  en: {
+    appLabel: "DFB Explorer App",
+    title: "Hand-operated Furka turntable",
+    intro:
+      "Explore a historic hand-operated railway turntable. Rotate the model with your finger and open the marked components.",
+    start: "Explore the object",
+    hint: "Drag with one finger horizontally or vertically. Tap the labels.",
+    component: "Component",
+    back: "Back",
+    short: "In brief",
+    technical: "Technical detail",
+    why: "Why it matters",
+    discovered: "Mark as discovered",
+    discoveredDone: "Discovered",
+    quiz: "Quiz question",
+    quizButton: "Open quiz",
+    correct: "Correct",
+    wrong: "Try again",
+    hotspotsOn: "Labels ON",
+    hotspotsOff: "Labels OFF",
+    languageLabel: "Choose language",
+    webglError:
+      "The 3D view could not be loaded. Please reload the page or use a browser that supports WebGL.",
+    progressLabel: "discovered",
+    next: "Next component",
+    completedTitle: "All discovered! 🎉",
+    completedText:
+      "You have explored every component of the turntable. Well done!",
+    toModel: "Back to the model",
+    reset: "Reset progress",
+    menu: "Menu",
   },
 } satisfies Record<Locale, UiText>;

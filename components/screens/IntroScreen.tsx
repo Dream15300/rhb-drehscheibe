@@ -5,15 +5,19 @@ import { type Locale, locales, type UiText } from "@/lib/i18n";
 type Props = {
   text: UiText;
   locale: Locale;
+  hasProgress: boolean;
   onSelectLocale: (locale: Locale) => void;
   onStart: () => void;
+  onReset: () => void;
 };
 
 export default function IntroScreen({
   text,
   locale,
+  hasProgress,
   onSelectLocale,
   onStart,
+  onReset,
 }: Props) {
   return (
     <section className="absolute inset-0 z-50 flex flex-col justify-between bg-[#f5f1ea] px-5 py-6">
@@ -53,13 +57,25 @@ export default function IntroScreen({
         </div>
       </div>
 
-      <button
-        type="button"
-        onClick={onStart}
-        className="min-h-14 rounded-2xl bg-red-700 px-5 text-base font-black uppercase tracking-wider text-white shadow-lg"
-      >
-        {text.start}
-      </button>
+      <div className="flex flex-col gap-3">
+        <button
+          type="button"
+          onClick={onStart}
+          className="min-h-14 rounded-2xl bg-red-700 px-5 text-base font-black uppercase tracking-wider text-white shadow-lg"
+        >
+          {text.start}
+        </button>
+
+        {hasProgress && (
+          <button
+            type="button"
+            onClick={onReset}
+            className="min-h-11 self-center text-sm font-bold uppercase tracking-wider text-neutral-500 underline underline-offset-4"
+          >
+            {text.reset}
+          </button>
+        )}
+      </div>
     </section>
   );
 }

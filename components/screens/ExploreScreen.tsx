@@ -8,30 +8,59 @@ type Props = {
   text: UiText;
   locale: Locale;
   discoveredIds: string[];
+  discoveredCount: number;
+  total: number;
   showHotspots: boolean;
   onToggleHotspots: () => void;
   onSelectHotspot: (hotspot: HotspotInfo) => void;
+  onHome: () => void;
 };
 
 export default function ExploreScreen({
   text,
   locale,
   discoveredIds,
+  discoveredCount,
+  total,
   showHotspots,
   onToggleHotspots,
   onSelectHotspot,
+  onHome,
 }: Props) {
   return (
     <>
-      <header className="pointer-events-none absolute left-0 top-0 z-20 w-full px-5 py-4">
-        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-red-700">
-          {text.appLabel}
-        </p>
+      <header className="pointer-events-none absolute left-0 top-0 z-20 flex w-full items-start justify-between gap-3 px-5 py-4">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-red-700">
+            {text.appLabel}
+          </p>
 
-        <h1 className="mt-1 max-w-[180px] text-[1.7rem] font-black leading-[0.98]">
-          {text.title}
-        </h1>
+          <h1 className="mt-1 max-w-[180px] text-[1.7rem] font-black leading-[0.98]">
+            {text.title}
+          </h1>
+        </div>
+
+        <p
+          aria-live="polite"
+          className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.08em] shadow-sm ${
+            discoveredCount >= total
+              ? "bg-green-700 text-white"
+              : "bg-white/90 text-neutral-800"
+          }`}
+        >
+          {discoveredCount} / {total} {text.progressLabel}
+        </p>
       </header>
+
+      <div className="absolute bottom-20 left-5 z-30">
+        <button
+          type="button"
+          onClick={onHome}
+          className="min-h-10 rounded-full border border-black/10 bg-white/90 px-4 text-[10px] font-black uppercase tracking-[0.12em] text-neutral-800 shadow-sm backdrop-blur"
+        >
+          ‹ {text.menu}
+        </button>
+      </div>
 
       <div className="absolute bottom-20 right-5 z-30">
         <button

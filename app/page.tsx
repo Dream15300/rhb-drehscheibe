@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import CompletedScreen from "@/components/screens/CompletedScreen";
 import DetailScreen from "@/components/screens/DetailScreen";
 import ExploreScreen from "@/components/screens/ExploreScreen";
 import IntroScreen from "@/components/screens/IntroScreen";
 import QuizScreen from "@/components/screens/QuizScreen";
-import type { HotspotInfo } from "@/lib/hotspots";
+import { type HotspotInfo, hotspots } from "@/lib/hotspots";
 import { type Locale, uiText } from "@/lib/i18n";
 import { usePersistentState } from "@/lib/usePersistentState";
 
-type Screen = "intro" | "explore" | "detail" | "quiz";
+type Screen = "intro" | "explore" | "detail" | "quiz" | "completed";
+
+const total = hotspots.length;
 
 export default function Home() {
   const [locale, setLocale] = usePersistentState<Locale>("rhb.locale", "de");
@@ -28,6 +31,13 @@ export default function Home() {
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
+
+  // Nur tatsächlich existierende Bauteile zählen (robust gegen alte Einträge).
+  const discoveredCount = useMemo(
+    () => hotspots.filter((hotspot) => discoveredIds.includes(hotspot.id)).length,
+    [discoveredIds],
+  );
+  const allDiscovered = total > 0 && discoveredCount === total;
 
   const isDiscovered = activeHotspot
     ? discoveredIds.includes(activeHotspot.id)
@@ -54,10 +64,33 @@ export default function Home() {
     );
   }
 
-  function goBackToExplore() {
-    setScreen("explore");
+  // Eine richtige Antwort markiert das Bauteil zugleich als entdeckt.
+  function answerQuiz(optionId: string) {
+    setQuizAnswer(optionId);
+    if (activeHotspot && optionId === activeHotspot.quiz.correctOptionId) {
+      markDiscovered();
+    }
+  }
+
+  function goToNextHotspot() {
+    if (!activeHotspot) return;
+    const index = hotspots.findIndex((h) => h.id === activeHotspot.id);
+    openHotspot(hotspots[(index + 1) % hotspots.length]);
+  }
+
+  // Nach dem Erkunden zurück ins Modell – oder zum Abschluss-Screen,
+  // sobald alle Bauteile entdeckt wurden.
+  function leaveDetail() {
     setActiveHotspot(null);
     setQuizAnswer(null);
+    setScreen(allDiscovered ? "completed" : "explore");
+  }
+
+  function resetProgress() {
+    setDiscoveredIds([]);
+    setActiveHotspot(null);
+    setQuizAnswer(null);
+    setScreen("explore");
   }
 
   return (
@@ -66,8 +99,10 @@ export default function Home() {
         <IntroScreen
           text={text}
           locale={locale}
+          hasProgress={discoveredCount > 0}
           onSelectLocale={setLocale}
           onStart={() => setScreen("explore")}
+          onReset={resetProgress}
         />
       )}
 
@@ -76,9 +111,12 @@ export default function Home() {
           text={text}
           locale={locale}
           discoveredIds={discoveredIds}
+          discoveredCount={discoveredCount}
+          total={total}
           showHotspots={showHotspots}
           onToggleHotspots={() => setShowHotspots((current) => !current)}
           onSelectHotspot={openHotspot}
+          onHome={() => setScreen("intro")}
         />
       )}
 
@@ -88,7 +126,7 @@ export default function Home() {
           locale={locale}
           hotspot={activeHotspot}
           isDiscovered={isDiscovered}
-          onBack={goBackToExplore}
+          onBack={leaveDetail}
           onMarkDiscovered={markDiscovered}
           onOpenQuiz={() => setScreen("quiz")}
         />
@@ -102,7 +140,19 @@ export default function Home() {
           selectedOptionId={quizAnswer}
           result={quizResult}
           onBack={() => setScreen("detail")}
-          onAnswer={setQuizAnswer}
+          onAnswer={answerQuiz}
+          onNext={goToNextHotspot}
+          onToModel={leaveDetail}
+        />
+      )}
+
+      {screen === "completed" && (
+        <CompletedScreen
+          text={text}
+          discoveredCount={discoveredCount}
+          total={total}
+          onBackToModel={() => setScreen("explore")}
+          onReset={resetProgress}
         />
       )}
     </main>

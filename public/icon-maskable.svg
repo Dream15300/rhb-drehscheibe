@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="DFB Drehscheibe">
+  <rect width="512" height="512" fill="#f5f1ea"/>
+  <circle cx="256" cy="256" r="130" fill="#e7e2d8" stroke="#4d4a45" stroke-width="16"/>
+  <rect x="120" y="240" width="272" height="32" rx="8" fill="#b00000"/>
+  <circle cx="256" cy="256" r="24" fill="#2f2f2f"/>
+</svg>
