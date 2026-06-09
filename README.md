@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DFB Furka-Drehscheibe – interaktive Entdecker-App
 
-## Getting Started
+Eine zweisprachige (DE/FR) Lern-Web-App, die eine **handbetriebene Furka-Drehscheibe**
+der Dampfbahn Furka-Bergstrecke (DFB) als interaktives 3D-Modell zeigt. Nutzer drehen das
+Modell mit dem Finger/der Maus, öffnen markierte Bauteile (Hotspots), lesen kurze und
+technische Erklärungen und testen ihr Wissen in kleinen Quizfragen.
 
-First, run the development server:
+## Funktionen
+
+- **3D-Modell** der Drehscheibe (react-three-fiber / three.js), per Pointer in zwei Achsen drehbar.
+- **Interaktive Hotspots** für Brücke, Fachwerk, Gleis, Drehlager, Handantrieb, Laufring,
+  Verriegelung und Grube.
+- **Detail- und Quiz-Screens** je Bauteil mit kurzer, technischer und „Warum wichtig?"-Erklärung.
+- **Zweisprachig** Deutsch/Französisch, Sprache umschaltbar und persistent.
+- **Fortschritt** („entdeckte" Bauteile) wird im `localStorage` gespeichert.
+- **Barrierefreiheit**: `prefers-reduced-motion` wird respektiert, `<html lang>` folgt der
+  Sprachwahl, Bedienelemente sind als Buttons mit `aria`-Zuständen ausgezeichnet.
+
+## Tech-Stack
+
+- [Next.js 16](https://nextjs.org) (App Router, Turbopack)
+- [React 19](https://react.dev)
+- [react-three-fiber](https://r3f.docs.pmnd.rs/) + [drei](https://github.com/pmndrs/drei) + [three.js](https://threejs.org)
+- [Tailwind CSS v4](https://tailwindcss.com)
+- TypeScript (strict)
+
+## Entwicklung
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # Dev-Server auf http://localhost:3000
+npm run build    # Produktionsbuild
+npm start        # Produktionsserver
+npm run lint     # ESLint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Projektstruktur
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/
+  layout.tsx     Root-Layout, Metadaten/Viewport, Geist-Fonts
+  page.tsx       Orchestrator: Screen-State-Machine + Persistenz
+  globals.css    Tailwind-Einstieg + Basis-Styles
+lib/
+  i18n.ts             Locale-Typ + UI-Texte (DE/FR)
+  hotspots.ts         Hotspot-Datenmodell + Inhalte + Gleiswinkel
+  usePersistentState  SSR-sicherer localStorage-State-Hook
+components/
+  Scene.tsx           three.js-Canvas, Pointer-Drag, Lade-/Fehler-Fallback
+  Turntable.tsx       3D-Geometrie der Drehscheibe + Hotspot-Marker
+  ErrorBoundary.tsx   Fallback für WebGL-/Renderfehler
+  screens/            Intro-, Explore-, Detail-, Quiz-Screen
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Inhalte erweitern
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Texte/Sprachen**: `lib/i18n.ts` (UI) bzw. die einzelnen Hotspot-Felder in `lib/hotspots.ts`.
+- **Neues Bauteil**: Eintrag in `hotspots` ergänzen (`anchorPosition`/`labelPosition` legen die
+  Marker im 3D-Raum fest).
+- **Fotos**: Bilddateien unter `public/images/` ablegen und das optionale Feld `image` des
+  jeweiligen Hotspots setzen. Ohne `image` wird der Bildbereich im Detail-Screen ausgeblendet.

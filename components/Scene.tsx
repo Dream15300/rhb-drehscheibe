@@ -2,14 +2,17 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
-import { useRef } from "react";
+import { Suspense, useRef } from "react";
 import type { PointerEvent } from "react";
-import Turntable, { type HotspotInfo, type Locale } from "./Turntable";
+import ErrorBoundary from "./ErrorBoundary";
+import Turntable from "./Turntable";
+import type { HotspotInfo, Locale } from "@/lib/hotspots";
 
 type Props = {
   locale: Locale;
   discoveredIds: string[];
   showHotspots: boolean;
+  errorLabel: string;
   onSelectHotspot: (hotspot: HotspotInfo) => void;
 };
 
@@ -22,6 +25,7 @@ export default function Scene({
   locale,
   discoveredIds,
   showHotspots,
+  errorLabel,
   onSelectHotspot,
 }: Props) {
   const targetRotation = useRef<TargetRotation>({ x: 0, y: 0 });
@@ -67,35 +71,47 @@ export default function Scene({
   }
 
   return (
-    <div
-      className="absolute inset-0 z-0 touch-none select-none"
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
-      onContextMenu={(event) => event.preventDefault()}
+    <ErrorBoundary
+      fallback={
+        <div className="absolute inset-0 z-0 flex items-center justify-center px-8">
+          <p className="max-w-sm text-center text-sm font-bold leading-6 text-neutral-700">
+            {errorLabel}
+          </p>
+        </div>
+      }
     >
-      <Canvas
-        camera={{ position: [0, 5.4, 7.4], fov: 41 }}
-        dpr={[1, 1.5]}
-        gl={{ antialias: true, alpha: false }}
+      <div
+        className="absolute inset-0 z-0 touch-none select-none"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        onContextMenu={(event) => event.preventDefault()}
       >
-        <color attach="background" args={["#f5f1ea"]} />
+        <Canvas
+          camera={{ position: [0, 5.4, 7.4], fov: 41 }}
+          dpr={[1, 1.5]}
+          gl={{ antialias: true, alpha: false }}
+        >
+          <color attach="background" args={["#f5f1ea"]} />
 
-        <ambientLight intensity={1.7} />
-        <directionalLight position={[4.5, 8, 5]} intensity={2.7} />
-        <directionalLight position={[-4, 4, -3]} intensity={1.1} />
+          <ambientLight intensity={1.7} />
+          <directionalLight position={[4.5, 8, 5]} intensity={2.7} />
+          <directionalLight position={[-4, 4, -3]} intensity={1.1} />
 
-        <Turntable
-          locale={locale}
-          discoveredIds={discoveredIds}
-          showHotspots={showHotspots}
-          targetRotation={targetRotation}
-          onSelectHotspot={onSelectHotspot}
-        />
+          <Turntable
+            locale={locale}
+            discoveredIds={discoveredIds}
+            showHotspots={showHotspots}
+            targetRotation={targetRotation}
+            onSelectHotspot={onSelectHotspot}
+          />
 
-        <Environment preset="sunset" />
-      </Canvas>
-    </div>
+          <Suspense fallback={null}>
+            <Environment preset="sunset" />
+          </Suspense>
+        </Canvas>
+      </div>
+    </ErrorBoundary>
   );
 }
