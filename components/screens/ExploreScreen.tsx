@@ -14,6 +14,7 @@ type Props = {
   onToggleHotspots: () => void;
   onSelectHotspot: (hotspot: HotspotInfo) => void;
   onHome: () => void;
+  onShowCompleted: () => void;
 };
 
 export default function ExploreScreen({
@@ -26,12 +27,14 @@ export default function ExploreScreen({
   onToggleHotspots,
   onSelectHotspot,
   onHome,
+  onShowCompleted,
 }: Props) {
+  const completed = discoveredCount >= total;
   return (
     <>
       <header className="pointer-events-none absolute left-0 top-0 z-20 flex w-full items-start justify-between gap-3 px-5 py-4">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-red-700">
+          <p className="text-[0.625rem] font-bold uppercase tracking-[0.32em] text-red-700">
             {text.appLabel}
           </p>
 
@@ -40,23 +43,29 @@ export default function ExploreScreen({
           </h1>
         </div>
 
-        <p
-          aria-live="polite"
-          className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.08em] shadow-sm ${
-            discoveredCount >= total
-              ? "bg-green-700 text-white"
-              : "bg-white/90 text-neutral-800"
-          }`}
-        >
-          {discoveredCount} / {total} {text.progressLabel}
-        </p>
+        {completed ? (
+          <button
+            type="button"
+            onClick={onShowCompleted}
+            className="pointer-events-auto shrink-0 rounded-full bg-green-700 px-3 py-1 text-[0.6875rem] font-black uppercase tracking-[0.08em] text-white shadow-sm"
+          >
+            {discoveredCount} / {total} {text.progressLabel}
+          </button>
+        ) : (
+          <p
+            aria-live="polite"
+            className="shrink-0 rounded-full bg-white/90 px-3 py-1 text-[0.6875rem] font-black uppercase tracking-[0.08em] text-neutral-800 shadow-sm"
+          >
+            {discoveredCount} / {total} {text.progressLabel}
+          </p>
+        )}
       </header>
 
       <div className="absolute bottom-20 left-5 z-30">
         <button
           type="button"
           onClick={onHome}
-          className="min-h-10 rounded-full border border-black/10 bg-white/90 px-4 text-[10px] font-black uppercase tracking-[0.12em] text-neutral-800 shadow-sm backdrop-blur"
+          className="min-h-10 rounded-full border border-black/10 bg-white/90 px-4 text-[0.625rem] font-black uppercase tracking-[0.12em] text-neutral-800 shadow-sm backdrop-blur"
         >
           ‹ {text.menu}
         </button>
@@ -72,7 +81,7 @@ export default function ExploreScreen({
             rounded-full
             border
             px-3
-            text-[10px]
+            text-[0.625rem]
             font-black
             uppercase
             tracking-[0.12em]
@@ -98,7 +107,7 @@ export default function ExploreScreen({
       />
 
       <div className="pointer-events-none absolute bottom-4 left-0 z-20 w-full px-5">
-        <div className="rounded-2xl border border-black/10 bg-white/80 px-3 py-1.5 text-[11px] font-bold leading-5 text-neutral-800 shadow-sm">
+        <div className="rounded-2xl border border-black/10 bg-white/80 px-3 py-1.5 text-[0.6875rem] font-bold leading-5 text-neutral-800 shadow-sm">
           {text.hint}
         </div>
       </div>

@@ -8,11 +8,30 @@ import IntroScreen from "@/components/screens/IntroScreen";
 import QuizScreen from "@/components/screens/QuizScreen";
 import { type HotspotInfo, hotspots } from "@/lib/hotspots";
 import { type Locale, uiText } from "@/lib/i18n";
+import { type FontScale, fontScalePercent } from "@/lib/preferences";
 import { usePersistentState } from "@/lib/usePersistentState";
 
 type Screen = "intro" | "explore" | "detail" | "quiz" | "completed";
 
 const total = hotspots.length;
+
+function shuffle<T>(items: T[]): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+// Pro Bauteil eine zufällige Reihenfolge der Antwort-IDs erzeugen.
+function buildOptionOrders(): Record<string, string[]> {
+  const orders: Record<string, string[]> = {};
+  for (const hotspot of hotspots) {
+    orders[hotspot.id] = shuffle(hotspot.quiz.options.map((option) => option.id));
+  }
+  return orders;
+}
 
 export default function Home() {
   const [locale, setLocale] = usePersistentState<Locale>("rhb.locale", "de");
@@ -20,10 +39,21 @@ export default function Home() {
     "rhb.discovered",
     [],
   );
+  const [fontScale, setFontScale] = usePersistentState<FontScale>(
+    "rhb.fontScale",
+    "normal",
+  );
   const [screen, setScreen] = useState<Screen>("intro");
   const [activeHotspot, setActiveHotspot] = useState<HotspotInfo | null>(null);
   const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
   const [showHotspots, setShowHotspots] = useState(true);
+  // Im aktuellen „Weiter"-Durchlauf bereits geöffnete Bauteile – damit jedes
+  // pro Durchlauf höchstens einmal angesteuert wird (auch bei falschen Antworten).
+  const [visitedIds, setVisitedIds] = useState<string[]>([]);
+  // Zufällige Antwort-Reihenfolge je Bauteil: stabil pro Sitzung, neu bei
+  // jedem Laden (neue Sitzung) und beim Zurücksetzen.
+  const [optionOrders, setOptionOrders] =
+    useState<Record<string, string[]>>(buildOptionOrders);
 
   const text = uiText[locale];
 
@@ -32,12 +62,16 @@ export default function Home() {
     document.documentElement.lang = locale;
   }, [locale]);
 
+  // Schriftgröße global über die Root-`font-size` skalieren (rem-basiert).
+  useEffect(() => {
+    document.documentElement.style.fontSize = fontScalePercent[fontScale];
+  }, [fontScale]);
+
   // Nur tatsächlich existierende Bauteile zählen (robust gegen alte Einträge).
   const discoveredCount = useMemo(
     () => hotspots.filter((hotspot) => discoveredIds.includes(hotspot.id)).length,
     [discoveredIds],
   );
-  const allDiscovered = total > 0 && discoveredCount === total;
 
   const isDiscovered = activeHotspot
     ? discoveredIds.includes(activeHotspot.id)
@@ -51,6 +85,9 @@ export default function Home() {
   function openHotspot(hotspot: HotspotInfo) {
     setActiveHotspot(hotspot);
     setQuizAnswer(null);
+    setVisitedIds((current) =>
+      current.includes(hotspot.id) ? current : [...current, hotspot.id],
+    );
     setScreen("detail");
   }
 
@@ -72,24 +109,42 @@ export default function Home() {
     }
   }
 
-  function goToNextHotspot() {
-    if (!activeHotspot) return;
-    const index = hotspots.findIndex((h) => h.id === activeHotspot.id);
-    openHotspot(hotspots[(index + 1) % hotspots.length]);
-  }
-
-  // Nach dem Erkunden zurück ins Modell – oder zum Abschluss-Screen,
-  // sobald alle Bauteile entdeckt wurden.
-  function leaveDetail() {
+  function backToModel() {
     setActiveHotspot(null);
     setQuizAnswer(null);
-    setScreen(allDiscovered ? "completed" : "explore");
+    setVisitedIds([]); // Durchlauf beenden -> Besuchsliste zurücksetzen.
+    setScreen("explore");
+  }
+
+  // „Weiter" springt zum nächsten Bauteil, das in diesem Durchlauf noch nicht
+  // besucht und noch nicht entdeckt wurde (in Reihenfolge, mit Umlauf). So wird
+  // jedes Bauteil pro Durchlauf höchstens einmal angesteuert (max. 8). Gibt es
+  // keins mehr, geht es zurück zum Modell.
+  function goToNextHotspot() {
+    if (!activeHotspot) return;
+
+    const startIndex = hotspots.findIndex((h) => h.id === activeHotspot.id);
+    for (let offset = 1; offset < hotspots.length; offset++) {
+      const candidate = hotspots[(startIndex + offset) % hotspots.length];
+      if (
+        !visitedIds.includes(candidate.id) &&
+        !discoveredIds.includes(candidate.id)
+      ) {
+        openHotspot(candidate);
+        return;
+      }
+    }
+
+    // Keine offenen Bauteile mehr -> zurück zum Modell.
+    backToModel();
   }
 
   function resetProgress() {
     setDiscoveredIds([]);
     setActiveHotspot(null);
     setQuizAnswer(null);
+    setVisitedIds([]);
+    setOptionOrders(buildOptionOrders()); // Antworten neu mischen.
     setScreen("explore");
   }
 
@@ -100,7 +155,9 @@ export default function Home() {
           text={text}
           locale={locale}
           hasProgress={discoveredCount > 0}
+          fontScale={fontScale}
           onSelectLocale={setLocale}
+          onSelectFontScale={setFontScale}
           onStart={() => setScreen("explore")}
           onReset={resetProgress}
         />
@@ -117,6 +174,7 @@ export default function Home() {
           onToggleHotspots={() => setShowHotspots((current) => !current)}
           onSelectHotspot={openHotspot}
           onHome={() => setScreen("intro")}
+          onShowCompleted={() => setScreen("completed")}
         />
       )}
 
@@ -126,7 +184,7 @@ export default function Home() {
           locale={locale}
           hotspot={activeHotspot}
           isDiscovered={isDiscovered}
-          onBack={leaveDetail}
+          onBack={backToModel}
           onMarkDiscovered={markDiscovered}
           onOpenQuiz={() => setScreen("quiz")}
         />
@@ -137,12 +195,13 @@ export default function Home() {
           text={text}
           locale={locale}
           hotspot={activeHotspot}
+          optionOrder={optionOrders[activeHotspot.id] ?? []}
           selectedOptionId={quizAnswer}
           result={quizResult}
           onBack={() => setScreen("detail")}
           onAnswer={answerQuiz}
           onNext={goToNextHotspot}
-          onToModel={leaveDetail}
+          onToModel={backToModel}
         />
       )}
 

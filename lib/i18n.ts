@@ -32,6 +32,10 @@ export type UiText = {
   toModel: string;
   reset: string;
   menu: string;
+  textSize: string;
+  textSizeNormal: string;
+  textSizeLarge: string;
+  textSizeXlarge: string;
 };
 
 export const uiText = {
@@ -66,6 +70,10 @@ export const uiText = {
     toModel: "Zurück zum Modell",
     reset: "Fortschritt zurücksetzen",
     menu: "Menü",
+    textSize: "Schriftgröße",
+    textSizeNormal: "Normal",
+    textSizeLarge: "Groß",
+    textSizeXlarge: "Sehr groß",
   },
 
   fr: {
@@ -99,6 +107,10 @@ export const uiText = {
     toModel: "Retour au modèle",
     reset: "Réinitialiser la progression",
     menu: "Menu",
+    textSize: "Taille du texte",
+    textSizeNormal: "Normal",
+    textSizeLarge: "Grand",
+    textSizeXlarge: "Très grand",
   },
 
   en: {
@@ -132,5 +144,9 @@ export const uiText = {
     toModel: "Back to the model",
     reset: "Reset progress",
     menu: "Menu",
+    textSize: "Text size",
+    textSizeNormal: "Normal",
+    textSizeLarge: "Large",
+    textSizeXlarge: "Extra large",
   },
 } satisfies Record<Locale, UiText>;

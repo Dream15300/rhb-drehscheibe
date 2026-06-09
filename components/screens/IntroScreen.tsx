@@ -1,21 +1,38 @@
 "use client";
 
 import { type Locale, locales, type UiText } from "@/lib/i18n";
+import { type FontScale, fontScales } from "@/lib/preferences";
 
 type Props = {
   text: UiText;
   locale: Locale;
   hasProgress: boolean;
+  fontScale: FontScale;
   onSelectLocale: (locale: Locale) => void;
+  onSelectFontScale: (scale: FontScale) => void;
   onStart: () => void;
   onReset: () => void;
+};
+
+const fontScaleLabel: Record<FontScale, keyof UiText> = {
+  normal: "textSizeNormal",
+  large: "textSizeLarge",
+  xlarge: "textSizeXlarge",
+};
+
+const fontScaleGlyphSize: Record<FontScale, string> = {
+  normal: "text-sm",
+  large: "text-base",
+  xlarge: "text-lg",
 };
 
 export default function IntroScreen({
   text,
   locale,
   hasProgress,
+  fontScale,
   onSelectLocale,
+  onSelectFontScale,
   onStart,
   onReset,
 }: Props) {
@@ -54,6 +71,37 @@ export default function IntroScreen({
               {option.toUpperCase()}
             </button>
           ))}
+        </div>
+
+        <div className="mt-6">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500">
+            {text.textSize}
+          </p>
+
+          <div
+            className="mt-2 inline-flex rounded-full border border-black/10 bg-white p-1 shadow-sm"
+            role="group"
+            aria-label={text.textSize}
+          >
+            {fontScales.map((scale) => (
+              <button
+                key={scale}
+                type="button"
+                onClick={() => onSelectFontScale(scale)}
+                aria-pressed={fontScale === scale}
+                aria-label={text[fontScaleLabel[scale]]}
+                className={`flex min-h-11 min-w-12 items-center justify-center rounded-full px-4 font-black leading-none ${
+                  fontScaleGlyphSize[scale]
+                } ${
+                  fontScale === scale
+                    ? "bg-red-700 text-white"
+                    : "bg-transparent text-neutral-800"
+                }`}
+              >
+                A
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

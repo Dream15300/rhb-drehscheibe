@@ -481,7 +481,7 @@ export default function Turntable({
                     rounded-full
                     border
                     px-2.5
-                    text-[8px]
+                    text-[0.5rem]
                     font-black
                     uppercase
                     tracking-[0.08em]

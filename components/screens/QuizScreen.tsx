@@ -7,6 +7,8 @@ type Props = {
   text: UiText;
   locale: Locale;
   hotspot: HotspotInfo;
+  /** Zufällige Reihenfolge der Antwort-IDs (von der Sitzung vorgegeben). */
+  optionOrder: string[];
   selectedOptionId: string | null;
   result: boolean | null;
   onBack: () => void;
@@ -19,6 +21,7 @@ export default function QuizScreen({
   text,
   locale,
   hotspot,
+  optionOrder,
   selectedOptionId,
   result,
   onBack,
@@ -28,6 +31,16 @@ export default function QuizScreen({
 }: Props) {
   const answered = selectedOptionId !== null;
   const correctId = hotspot.quiz.correctOptionId;
+
+  // Antworten in der vorgegebenen Reihenfolge anzeigen; bei fehlender/ungültiger
+  // Reihenfolge auf die Originalreihenfolge zurückfallen.
+  const orderedByPrefs = optionOrder
+    .map((id) => hotspot.quiz.options.find((option) => option.id === id))
+    .filter((option) => option !== undefined);
+  const orderedOptions =
+    orderedByPrefs.length === hotspot.quiz.options.length
+      ? orderedByPrefs
+      : hotspot.quiz.options;
 
   function optionClasses(optionId: string) {
     const base =
@@ -77,7 +90,7 @@ export default function QuizScreen({
         </h2>
 
         <div className="mt-8 space-y-3">
-          {hotspot.quiz.options.map((option) => (
+          {orderedOptions.map((option) => (
             <button
               key={option.id}
               type="button"
