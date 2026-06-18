@@ -31,9 +31,21 @@ export default function IntroScreen({
       className="absolute inset-0 z-50 flex h-full flex-col overflow-hidden bg-[#f5f1ea] px-[1.4em] py-[1.3em]"
     >
       <div className="flex min-h-0 flex-1 flex-col">
-        <p className="text-[0.8em] font-bold uppercase tracking-[0.32em] text-red-700">
-          {text.appLabel}
-        </p>
+        <div className="mb-[0.8em] flex items-center justify-between gap-[1em]">
+          <p className="text-[0.8em] font-bold uppercase tracking-[0.32em] text-red-700">
+            {text.appLabel}
+          </p>
+
+          <Image
+            src="/dfb-logo.svg"
+            alt="Dampfbahn Furka-Bergstrecke"
+            width={1200}
+            height={495}
+            priority
+            unoptimized
+            className="h-[3.1em] w-auto shrink-0"
+          />
+        </div>
 
         <h1
           ref={headingRef}

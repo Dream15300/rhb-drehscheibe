@@ -1,16 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Oswald, Source_Serif_4 } from "next/font/google";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// CD-Manual DFB: Überschriften/technische Angaben in DIN Condensed (Versalien),
+// Lesetext in Kepler Std. Beide sind Adobe Fonts und nicht frei einbettbar –
+// wir verwenden die nächstgelegenen freien Äquivalente:
+//   Oswald          ≈ DIN Condensed (schmale Grotesk, Rollmaterial-Anmutung)
+//   Source Serif 4  ≈ Kepler Std (beide von Robert Slimbach)
+const displayFont = Oswald({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const bodyFont = Source_Serif_4({
+  variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -58,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${displayFont.variable} ${bodyFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {children}

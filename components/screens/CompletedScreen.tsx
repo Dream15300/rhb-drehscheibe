@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { UiText } from "@/lib/i18n";
 import { useFocusOnMount } from "@/lib/useFocusOnMount";
 
@@ -26,6 +27,15 @@ export default function CompletedScreen({
       style={{ fontSize: "clamp(10px, 2.15dvh, 19px)" }}
       className="absolute inset-0 z-50 flex h-full flex-col items-center justify-center gap-[1em] overflow-hidden bg-[#f5f1ea] px-[1.5em] py-[1.3em] text-center text-neutral-950"
     >
+      <Image
+        src="/dfb-logo.svg"
+        alt="Dampfbahn Furka-Bergstrecke"
+        width={1200}
+        height={495}
+        unoptimized
+        className="h-[3em] w-auto"
+      />
+
       <p className="text-[0.8em] font-bold uppercase tracking-[0.32em] text-red-700">
         {text.appLabel}
       </p>

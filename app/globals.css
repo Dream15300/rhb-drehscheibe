@@ -1,19 +1,47 @@
 @import "tailwindcss";
 
-@theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  /* DFB-Primärfarben (vom Rollmaterial abgeleitet) */
+  --color-furka-blue: #143a84;
+  --color-furka-red: #a31a1b;
+  --color-furka-green: #124e33;
+  --color-furka-gold: #fec905;
+
+  /* DFB-Sekundärfarben (gedämpft, alpin) */
+  --color-gletscher: #c2c9d4;
+  --color-granit: #bc9d97;
+
+  /* Bestehende UI-Klassen auf die DFB-Markenfarben mappen:
+     Rot  -> Furka Rot  (UI-Akzent, Rollmaterial-Rot)
+     Grün -> Furka Grün ("entdeckt" / "richtig") */
+  --color-red-600: #b81f20;
+  --color-red-700: #a31a1b;
+  --color-green-100: #dbe7df;
+  --color-green-700: #124e33;
+  --color-green-800: #0e3c27;
+  --color-green-900: #0c3220;
 }
 
 html {
-  /* Verhindert Auto-Vergrößerung von Text beim Drehen mobiler Geräte. */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
-body {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  /* Die App ist eine fixe Vollbild-Szene mit hellem Hintergrund. */
-  background: #f5f1ea;
-  color: #0a0a0a;
+@layer base {
+  body {
+    /* Lesetext in der Kepler-nahen Serifenschrift (CD-Manual). */
+    font-family: var(--font-body), Georgia, serif;
+    background: #f5f1ea;
+    color: #1d1d1b;
+  }
+
+  /* Überschriften, Labels und Bedienelemente in der DIN-Condensed-nahen
+     Display-Schrift – referenziert die Beschriftung des Rollmaterials. */
+  h1,
+  h2,
+  h3,
+  h4,
+  button {
+    font-family: var(--font-display), "Arial Narrow", sans-serif;
+  }
 }

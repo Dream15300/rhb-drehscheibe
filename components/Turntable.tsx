@@ -370,22 +370,22 @@ export default function Turntable({
       <Beam
         position={[0, 0.36, -0.3]}
         args={[5.9, 0.085, 0.06]}
-        color="#7e1f1b"
+        color="#8a1718"
       />
       <Beam
         position={[0, 0.36, 0.3]}
         args={[5.9, 0.085, 0.06]}
-        color="#7e1f1b"
+        color="#8a1718"
       />
       <Beam
         position={[0, 0.55, -0.3]}
         args={[5.9, 0.052, 0.045]}
-        color="#9b2a24"
+        color="#a31a1b"
       />
       <Beam
         position={[0, 0.55, 0.3]}
         args={[5.9, 0.052, 0.045]}
-        color="#9b2a24"
+        color="#a31a1b"
       />
 
       {[-2.55, -1.95, -1.35, -0.75, -0.15, 0.45, 1.05, 1.65, 2.25, 2.75].map(
@@ -394,7 +394,7 @@ export default function Turntable({
             key={`bridge-cross-${x}`}
             position={[x, 0.44, 0]}
             args={[0.045, 0.048, 0.66]}
-            color="#731f1b"
+            color="#7a1516"
           />
         ),
       )}
@@ -445,7 +445,7 @@ export default function Turntable({
             <group key={hotspot.id}>
               <Line
                 points={[hotspot.anchorPosition, labelPosition]}
-                color={isDiscovered ? "#15803d" : "#b00000"}
+                color={isDiscovered ? "#124e33" : "#a31a1b"}
                 lineWidth={isDiscovered ? 2.8 : 2.1}
                 transparent
                 opacity={isDiscovered ? 0.95 : 0.72}
@@ -454,7 +454,7 @@ export default function Turntable({
               <mesh position={hotspot.anchorPosition}>
                 <sphereGeometry args={[isDiscovered ? 0.075 : 0.055, 20, 20]} />
                 <meshStandardMaterial
-                  color={isDiscovered ? "#15803d" : "#b00000"}
+                  color={isDiscovered ? "#124e33" : "#a31a1b"}
                   roughness={0.45}
                 />
               </mesh>
@@ -474,15 +474,15 @@ export default function Turntable({
                   }}
                   className={`
                     flex
-                    h-11
-                    min-w-[64px]
+                    h-9
+                    min-w-[52px]
                     items-center
                     justify-center
                     whitespace-nowrap
                     rounded-full
                     border
-                    px-3
-                    text-[0.9rem]
+                    px-2.5
+                    text-[0.72rem]
                     font-black
                     uppercase
                     leading-none

@@ -45,6 +45,44 @@ Dark Mode ist bewusst nicht umgesetzt (Aussennutzung, heller Hintergrund).
 3D-`<canvas>` selbst keine semantische Struktur liefert, erfolgt die inhaltliche Erkundung
 über die als Buttons ausgezeichneten Hotspots samt Detail-/Quiz-Screens.
 
+## Corporate Design (DFB CD-Manual)
+
+Die Oberfläche orientiert sich am **CD-Manual der Dampfbahn Furka-Bergstrecke**
+(V1.6). Umgesetzte Ableitungen:
+
+**Logo** — Das offizielle DFB-Logo (`public/dfb-logo.svg`) steht auf dem Start- und dem
+Abschluss-Screen, mit Abstand (Schutzraum) zu den übrigen Elementen.
+
+**Farben** — Die DFB-Primärfarben (vom Rollmaterial abgeleitet) sind als Tokens hinterlegt
+(`app/globals.css`) und den bestehenden UI-Rollen zugeordnet:
+
+| DFB-Farbe | HEX | Verwendung in der App |
+| --- | --- | --- |
+| Furka Rot | `#A31A1B` | UI-Akzent (Buttons, aktive Zustände, Hotspot-Marker) und die Brücke des 3D-Modells (Rollmaterial-Rot) |
+| Furka Grün | `#124E33` | „entdeckt" / richtige Quiz-Antwort |
+| Furka Blau | `#143A84` | Logo (Markenzeichen) |
+| Furka Gelb | `#FEC905` | als Token reserviert (Signal) |
+| Gletscher / Granit | `#C2C9D4` / `#BC9D97` | Sekundärfarben (Token reserviert) |
+
+Begründung: Die App nutzte bereits Rot als Leitakzent – dieses wird 1:1 auf **Furka Rot**
+gelegt (das Rot stammt laut Manual vom Rollmaterial, passend zur roten Modell-Brücke).
+„Entdeckt"/„richtig" nutzt **Furka Grün**, das Markenzeichen bringt **Furka Blau** ein – so
+sind alle drei Primärfarben präsent. Sekundärfarben treten gemäss Manual nie allein auf.
+
+**Typografie** — Das Manual schreibt **DIN Condensed** (Überschriften/technische Angaben,
+Versalien – referenziert die Rollmaterial-Beschriftung) und **Kepler Std** (Lesetext) vor.
+Beide sind Adobe Fonts und nicht frei einbettbar; wir verwenden die nächstgelegenen freien
+Äquivalente:
+
+- **Oswald** ≈ DIN Condensed → Überschriften, Labels und Bedienelemente (`h1–h4`, `button`)
+- **Source Serif 4** ≈ Kepler Std (beide von Robert Slimbach) → Fliess-/Lesetext (`body`)
+
+**Gestalterische Grundsätze** — reduziert, ruhig, keine grellen Farben oder dekorativen
+Effekte (Manual). Bewusste, begründete Abweichungen: Überschriften bleiben gemischt
+geschrieben (nicht durchgängig Versalien), da lange deutsche Komposita („Drehscheibenbrücke")
+in Grossbuchstaben schlechter lesbar sind – Lesbarkeit hat im Ausseneinsatz Vorrang. Der
+warme, neutrale Hintergrund (`#f5f1ea`) dient als ruhige „Papier"-Fläche für das 3D-Modell.
+
 ## Tech-Stack
 
 - [Next.js 16](https://nextjs.org) (App Router, Turbopack)

@@ -24,7 +24,7 @@ export default function OpengraphImage() {
             fontSize: 30,
             letterSpacing: 8,
             fontWeight: 700,
-            color: "#b00000",
+            color: "#a31a1b",
           }}
         >
           DFB ENTDECKER-APP
